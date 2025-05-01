@@ -1,0 +1,5 @@
+{
+    "files.exclude": {
+        "**/portfolios-business-intelligence-data-analysis.code-workspace": true
+    }
+}
