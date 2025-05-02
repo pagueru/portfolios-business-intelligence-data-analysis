@@ -6,7 +6,7 @@ Este repositório é um monorepo criado para agrupar e organizar trabalhos acad�
 
 ## Sobre o Monorepo
 
-Cada subpasta neste repositório corresponde a um projeto acadêmico independente, incluindo um arquivo README.md com instruções detalhadas sobre instalação, execução e requisitos específicos.
+Cada subpasta neste repositório corresponde a um projeto acadêmico independente, incluindo um arquivo README.md com instruções detalhadas sobre instalação, execução e requisitos específicos. As pastas contendo as atividades seguirão o padrão de nomenclatura "portfolio-disciplina" (por exemplo: `portfolio-nosql-database`).
 
 ### Tecnologias Utilizadas
   
