@@ -200,9 +200,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
 ### 2.3 Processamento de Dados (Procedimento/Atividade № 2)
 
-Esta etapa focou na realização de consultas (**queries**) na collection **vendas** do banco **lojadb**.
-
-Dica: Utilizar `.pretty()` ao final dos comandos **find** na **Shell** do **MongoDB** para melhor formatação do resultado.
+Esta etapa focou na realização de queries na collection **vendas** do banco **lojadb**.
 
 1. Consulta que retorna todos os documentos da collection.
 
@@ -251,17 +249,19 @@ Dica: Utilizar `.pretty()` ao final dos comandos **find** na **Shell** do **Mong
 
 ## 3. Resultados
 
-As consultas realizadas permitiram extrair informações específicas da base de dados **lojadb**.
+As consultas realizadas na base **lojadb** permitiram observar, na prática, como o MongoDB lida com diferentes estruturas de dados. Os principais pontos identificados foram:
 
-- A consulta geral retornou todos os documentos completos.
-- A consulta por nome filtrou eficientemente o documento da cliente **Maria**.
-- A projeção permitiu selecionar apenas os campos desejados (nomes dos clientes **VIPs**).
-- Foi possível consultar dados dentro de estruturas aninhadas como a array de **compras**.
-- Consultas mais avançadas (como a de nomes de **produtos distintos**) demonstraram a capacidade de **agregação** do **MongoDB**.
+- A consulta geral mostrou que os dados foram inseridos e atualizados corretamente.
+- A busca por nome facilitou encontrar informações específicas, como o registro da cliente **Maria**.
+- A projeção de campos permitiu visualizar apenas os dados necessários, como os nomes dos clientes **VIPs**.
+- Consultas em arrays e objetos aninhados, como as compras de cada cliente, mostraram a flexibilidade do modelo de documentos.
+- A consulta de produtos distintos ajudou a identificar todos os itens comprados, sem repetições.
+
+Esses resultados mostram que o MongoDB pode ser útil em situações que exigem flexibilidade e consultas variadas, contribuindo para a análise dos dados de forma simples e eficiente.
 
 ## 4. Conclusão
 
-A aula prática proporcionou experiência na utilização do **MongoDB** para criar, popular, atualizar e consultar um banco de dados não relacional orientado a documentos. Foram aplicados conceitos importantes como a flexibilidade de esquema, o uso de arrays e objetos aninhados, e a execução de diferentes tipos de consultas. Ao final da prática, espera-se que o aluno tenha desenvolvido a capacidade de trabalhar com bancos de dados **MongoDB** em cenários básicos.
+A atividade prática permitiu conhecer, de forma simples, o funcionamento do **MongoDB** para criar, atualizar e consultar dados em um banco não relacional. Foi possível perceber a flexibilidade do modelo de documentos e a facilidade para realizar consultas variadas. A experiência contribuiu para entender conceitos básicos de bancos de dados NoSQL e como aplicá-los em situações do dia a dia.
 
 ## 5. Referências Bibliográficas
 
