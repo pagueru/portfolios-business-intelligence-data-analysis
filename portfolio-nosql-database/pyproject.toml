@@ -1,5 +1,5 @@
 [project]
-name = "bancos-de-dados-nao-relacionais"
+name = "portfolio-nosql-database"
 version = "0.1.0"
 description = ""
 authors = [
@@ -12,6 +12,11 @@ dependencies = [
     "PyYaml==6.0.1",
     "pandas (>=2.2.3,<3.0.0)",
     "faker (>=37.0.2,<38.0.0)",
+    "weasyprint (>=65.1,<66.0)",
+    "pdfkit (>=1.0.0,<2.0.0)",
+    "pyppeteer (>=2.0.0,<3.0.0)",
+    "markdown (>=3.8,<4.0)",
+    "pandocfilters (>=1.5.1,<2.0.0)",
 ]
 
 [tool.poetry]
@@ -107,14 +112,6 @@ exclude = ".venv"
 
 [tool.pytest.ini_options]
 pythonpath = [".","src"]         # Adiciona o diretório atual ao PYTHONPATH
-
-# Adiciona opções padrão para o pytest
-addopts = [
-    "--junit-xml=tests/htmlcov/report.xml",     # Gera o relatório de teste em XML
-    "--no-cov-on-fail",                         # Desabilita a cobertura se os testes falharem
-    "--cov-report=term-missing:skip-covered",   # Mostra os arquivos com cobertura de código
-    "--cov-fail-under=80"                       # Falha se a cobertura de código for menor que 80%
-]
 
 [project.urls]
 repository = "https://github.com/pagueru/portfolios-business-intelligence-data-analysis"

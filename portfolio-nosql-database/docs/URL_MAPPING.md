@@ -1,0 +1,15 @@
+<https://imgur.com/gE1ZCqj> 1-criacao-banco-e-collection.png
+<https://imgur.com/gE1ZCqj> 2-update-joao-1.png
+<https://imgur.com/I0ANkf0> 3-update-marcos-1.png
+<https://imgur.com/kfYM3mc> 4-update-maria-1.png
+<https://imgur.com/J6cU5g9> 5-update-geral-1.png
+<https://imgur.com/J4gYknV> 6-update-joao-2.png
+<https://imgur.com/Wa6HhB6> 7-update-marcos-2.png
+<https://imgur.com/8W2KXMj> 8-update-maria-2.png
+<https://imgur.com/gP4Sj8I> 9-update-geral-2.png
+<https://imgur.com/KGUN8a7> 10-select-1.png
+<https://imgur.com/NbiqUYQ> 11-select-2.png
+<https://imgur.com/fJlc9rm> 12-select-3.png
+<https://imgur.com/cgG923c> 13-select-4.png
+<https://imgur.com/bhVF2Sw> 14-select-5.png
+<https://imguCr.com/vDVfuZv> 15-select.6.png

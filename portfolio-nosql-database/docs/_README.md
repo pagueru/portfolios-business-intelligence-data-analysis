@@ -56,7 +56,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
   
     a. Criação do banco de dados **lojadb** e da collection **vendas**.
 
-      <img src="./images/1-criacao-banco-e-collection.png" width="900" alt="1-criacao-banco-e-collection" />
+      <img src="https://imgur.com/gE1ZCqj.png" width="900" alt="1-criacao-banco-e-collection" />
 
       <div style="page-break-after: always;"></div>
 
@@ -91,7 +91,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     a. Atualização do endereço de João.
 
-      <img src="./images/2-update-joao-1.png" width="900" alt="2-update-joao-1" />
+      <img src="https://imgur.com/gE1ZCqj.png" width="900" alt="2-update-joao-1" />
 
       ```javascript
       // db-vendas-update-joao-endereco
@@ -113,7 +113,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     b. Atualização do endereço de Marcos.
 
-      <img src="./images/3-update-marcos-1.png" width="900" alt="3-update-marcos-1.png" />
+      <img src="https://imgur.com/I0ANkf0.png" width="900" alt="3-update-marcos-1.png" />
 
       ```javascript
       // db-vendas-update-marcos-endereco
@@ -134,7 +134,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     c. Atualização do endereço de Maria.
 
-      <img src="./images/4-update-maria-1.png" width="900" alt="4-update-maria-1.png" />
+      <img src="https://imgur.com/kfYM3mc.png" width="900" alt="4-update-maria-1.png" />
 
       ```javascript
       // db-vendas-update-maria-endereco
@@ -155,13 +155,13 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     d. Atualização geral dos endereços.
 
-      <img src="./images/5-update-geral-1.png" width="900" alt="5-update-geral-1.png" />
+      <img src="https://imgur.com/J6cU5g9.png" width="900" alt="5-update-geral-1.png" />
 
 2. Atualização com o campo **compras** (array de objetos: `nome_produto`, `preco`, `quantidade`).
 
     a. Atualização das compras de João.
 
-      <img src="./images/6-update-joao-2.png" width="900" alt="6-update-joao-2" />
+      <img src="https://imgur.com/J4gYknV.png" width="900" alt="6-update-joao-2" />
 
       ```javascript
       // db-vendas-update-joao-compras
@@ -179,7 +179,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     b. Atualização das compras de Marcos.
 
-      <img src="./images/7-update-marcos-2.png" width="900" alt="7-update-marcos-2" />
+      <img src="https://imgur.com/Wa6HhB6.png" width="900" alt="7-update-marcos-2.png" />
 
       ```javascript
       // db-vendas-update-marcos-compras
@@ -198,7 +198,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     c. Atualização das compras de Maria.
 
-      <img src="./images/8-update-maria-2.png" width="900" alt="8-update-maria-2" />
+      <img src="https://imgur.com/8W2KXMj.png" width="900" alt="8-update-maria-2.png" />
 
       ```javascript
       // db-vendas-update-maria-compras
@@ -218,7 +218,7 @@ A atividade consistiu em criar um banco de dados **lojadb** para simular o conte
 
     d. Atualização geral das compras.
 
-      <img src="./images/9-update-geral-2.png" width="900" alt="9-update-geral-2.png" />
+      <img src="https://imgur.com/gP4Sj8I.png" width="900" alt="9-update-geral-2.png" />
 
 ### 2.3 Processamento de Dados (Procedimento/Atividade № 2)
 
@@ -233,7 +233,7 @@ Esta etapa focou na realização de queries na collection **vendas** do banco **
       db.vendas.find().pretty()
       ```
 
-      <img src="./images/10-select-1.png" width="900" alt="10-select-1" />
+      <img src="https://imgur.com/KGUN8a7.png" width="900" alt="10-select-1" />
 
 2. Consulta que localiza as informações da cliente “Maria”.
 
@@ -244,7 +244,7 @@ Esta etapa focou na realização de queries na collection **vendas** do banco **
       db.vendas.find({ "nome": "Maria" }).pretty()
       ```
 
-      <img src="./images/11-select-2.png" width="900" alt="11-select-2" />
+      <img src="https://imgur.com/NbiqUYQ.png" width="900" alt="11-select-2" />
 
 3. Consulta que retorna o campo `nome` dos clientes **VIPs**.
 
@@ -255,7 +255,7 @@ Esta etapa focou na realização de queries na collection **vendas** do banco **
       db.vendas.find({ "vip": 1 }, { "nome": 1, "_id": 0 }).pretty()
       ```
 
-      <img src="./images/12-select-3.png" width="900" alt="12-select-3" />
+      <img src="https://imgur.com/fJlc9rm.png" width="900" alt="12-select-3" />
 
 4. Consulta que exibe as **compras** efetuadas por “Marcos”.
 
@@ -266,7 +266,7 @@ Esta etapa focou na realização de queries na collection **vendas** do banco **
       db.vendas.find({ "nome": "Marcos" }, { "compras": 1, "_id": 0 }).pretty()
       ```
 
-      <img src="./images/13-select-4.png" width="900" alt="13-select-4" />
+      <img src="https://imgur.com/cgG923c.png" width="900" alt="13-select-4" />
 
 5. Consulta que retorna os **nomes dos produtos** distintos comprados por todos os clientes.
   
@@ -277,7 +277,7 @@ Esta etapa focou na realização de queries na collection **vendas** do banco **
       db.vendas.distinct("compras.nome_produto")
       ```
 
-      <img src="./images/14-select-5.png" width="900" alt="14-select-5" />
+      <img src="https://imgur.com/bhVF2Sw.png" width="900" alt="14-select-5.png" />
 
 ## 3. Resultados
 
@@ -299,4 +299,4 @@ A atividade prática permitiu conhecer, de forma simples, o funcionamento do **M
 
 MongoDB. (2024). *MongoDB Documentation*. Disponível em: [https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/](https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/)  
 Markdown Community. (2024). The Markdown Guide. Disponível em: [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/)  
-MongoDB. (2024). *O que é um banco de dados de documentos?*. Disponível em: [https://www.mongodb.com/pt-br/resources/basics/databases/document-databases](https://www.mongodb.com/pt-br/resources/basics/databases/document-databases)  
+MongoDB. (2024). *O que é um banco de dados de documentos?*. Disponível em: [https://www.mongodb.com/pt-br/resources/basics/databases/document-databases](https://www.mongodb.com/pt-br/resources/basics/databases/document-databases)

@@ -1,0 +1,310 @@
+
+/* Estiliza o corpo do documento */
+body {
+  color-scheme: dark;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: #f0f6fc;
+  background-color: #0d1117;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 12.8px;
+  line-height: 1.6 !important;
+  word-wrap: break-word;
+  width: 100%;
+  padding: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Utilitário para quebra de página em PDF */
+.page {
+  page-break-after: always;
+}
+
+/* Configurações de página para PDF */
+@page {
+  margin-top: 25px !important;
+  margin-bottom: 30px !important;
+  margin-left: 50px;
+  margin-right: 50px;
+  background: #0d1117;
+  size: A4;
+  @bottom-right {
+    content: "p. " counter(page) "/" counter(pages);
+    font-size: 8pt;
+    font-family: "Segoe UI";
+    color: #ffff;
+
+  }
+}
+
+/* Estiliza todos os títulos (h1-h6) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Segoe UI";
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+/* Estiliza títulos por nível */
+h1, h2 {
+  font-weight: 600;
+  padding-bottom: .3em;
+  border-bottom: 1px solid #3d444db3;
+}
+
+h1 {
+  margin: 0.5em 0 0.5em 0 !important; /* top, right, bottom, left */
+  font-size: 2em;
+  line-height: 1.2;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: .875em;
+}
+
+h6 {
+  font-size: .85em;
+  color: #9198a1;
+}
+
+/* Estiliza links */
+a, 
+a:focus,
+a:active,
+a:hover {
+  color: #4493f8;
+  outline: none !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+  background-color: transparent !important;
+  display: inline !important;
+}
+
+a {
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+/* Estiliza imagens */
+img {
+  border-style: none;
+  max-width: 96.5%;
+  max-height: 100%;
+  box-sizing: content-box;
+
+}
+
+/* Estiliza fontes monoespaçadas e elementos de código */
+code, kbd, pre, samp, tt {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-size: 12px;
+}
+
+/* Estiliza código inline */
+code {
+  background: #1e242a;
+  color: #fff;
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 6px;
+  white-space: break-spaces;
+}
+
+/* Estiliza atalhos de teclado e blocos de código */
+kbd, pre, pre>code {
+  border-radius: 6px;
+  background-color: #151b23;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.25rem;
+  font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  line-height: 10px;
+  color: #f0f6fc;
+  vertical-align: middle;
+  border: solid 1px #3d444db3;
+  border-bottom-color: #3d444db3;
+  box-shadow: inset 0 -1px 0 #3d444db3;
+}
+
+pre, pre > code {
+  color: #f0f6fc;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+/* Remove indentação especial dos comentários em codeblocks gerados pelo Pandoc */
+pre > code.sourceCode > span {
+  text-indent: 0 !important;
+  padding-left: 0 !important;
+  display: inline-block !important;
+}
+
+/* Estiliza blocos de citação */
+blockquote {
+  line-height: 1.7;
+  font-weight: lighter !important;
+  margin: 0 7px 0 5px;
+  padding: 0 16px 0 10px;
+  color: #ffffff;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+/* Estiliza linhas horizontais */
+hr {
+  border: 0;
+  height: 2px;
+  border-bottom: 2px solid;
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  margin: 1.5rem 0;
+  background-color: #3d444d;
+}
+
+/* Estiliza ícones Octicon */
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+  overflow: visible !important;
+}
+
+
+/* Codeblock JavaScript: fundo, cor padrão e alinhamento */
+.sourceCode, .sourceCode.javascript, .sourceCode.javascript pre, pre code.sourceCode.javascript {
+  background: #001e2b !important;
+  color: #fff !important;
+  text-align: left !important;
+  margin-top: 5px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  border-radius: 6px !important;
+}
+
+/* Codeblock JavaScript: tokens customizados */
+/* Laranja: vendas, updateOne, $set (funções, atributos especiais, propriedades específicas) */
+.sourceCode.javascript .fu,
+.sourceCode.javascript .at,
+.sourceCode.javascript .va,
+.sourceCode.javascript .dt {
+  color: #ff6f44 !important;
+  /* font-weight: bold !important; */
+}
+
+/* Verde: strings */
+.sourceCode.javascript .st {
+  color: #35de7b !important;
+}
+
+/* Cyano: números inteiros e floats */
+.sourceCode.javascript .dv, .sourceCode.javascript .fl {
+  color: #21c4ff !important;
+}
+
+/* Branco: demais tokens (db, chaves, parênteses, colchetes, operadores, palavras-chave, etc.) */
+.sourceCode.javascript, .sourceCode.javascript span, .sourceCode.javascript .op, .sourceCode.javascript .kw, .sourceCode.javascript .cn, .sourceCode.javascript .cf, .sourceCode.javascript .ot, .sourceCode.javascript .bn, .sourceCode.javascript .bu, .sourceCode.javascript .sc, .sourceCode.javascript .ss, .sourceCode.javascript .er, .sourceCode.javascript .co, .sourceCode.javascript .an, .sourceCode.javascript .al, .sourceCode.javascript .im, .sourceCode.javascript .pp, .sourceCode.javascript .ex, .sourceCode.javascript .vs, .sourceCode.javascript .wa, .sourceCode.javascript .in, .sourceCode.javascript .kwd, .sourceCode.javascript .typ, .sourceCode.javascript .com {
+  color: #fff !important;
+}
+
+/* Comentários */
+.sourceCode.javascript .co {
+  margin-left: -20px !important; /* ajuste o valor conforme necessário */
+  display: inline-block !important;
+  color: #c1c7c6 !important;
+}
+
+/* TODO: TERMINAR DE CORRIGIR AS CORES */
+
+/* TODO: CORRIGIR TABELAS  */
+
+/* Estiliza tabelas corretamente */
+table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  /* width: 100% !important; */
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  display: table !important;
+  margin-bottom: 1rem !important;
+  font-variant: tabular-nums !important;
+}
+
+table td {
+  padding: 6px 13px !important;
+  border: 1px solid #3d444d !important;
+}
+
+table tr {
+  background-color: #0d1117 !important;
+  border-top: 1px solid #3d444db3 !important;
+}
+
+table tr:nth-child(2n) {
+  background-color: #151b23 !important;
+}
+
+/* Estiliza o cabeçalho da tabela */
+ol[type="1"] {
+  padding-left: 2em !important;
+  margin-left: 0em !important; 
+  list-style-type: decimal !important;
+}
+
+ol[type="a"] {
+  padding-left: 2em !important;
+  margin-left: 1em !important; 
+  list-style-type: lower-alpha !important;
+}
+
+/* Estiliza listas ordenadas */
+ul > li {
+  padding-left: 0em !important;
+  margin-left: -1em !important; 
+}
+
+/* Estiliza listas não ordenadas */
+p > img {
+  display: inline !important;
+  vertical-align: left !important;
+  margin-left: 2em !important;
+}
+
+/* Estiliza o texto em negrito */
+strong, b {
+  font-family: "Segoe UI" !important;
+  font-weight: bold !important;
+}
+
+p {
+  margin: 0 0 1em !important;
+  padding: 0 !important;
+  line-height: 1.7 !important;
+  font-size: 1em !important;
+  color: #f0f6fc !important;
+}

@@ -2,7 +2,7 @@
 
 [![Python](images/badges/python.svg)](https://www.python.org/) [![Poetry](images/badges/poetry.svg)](https://python-poetry.org/) [![Ruff](images/badges/ruff.svg)](https://github.com/astral-sh/ruff) [![Colaborar](images/badges/colaborar.svg)](https://www.colaboraread.com.br/login/auth) [![Anhanguera](images/badges/anhanguera.svg)](https://www.anhanguera.com/)
 
-Este repositório é um monorepo criado para agrupar e organizar trabalhos acadêmicos desenvolvidos ao longo do curso Superior de Tecnologia em Inteligência de Mercado e Análise de Dados da Anhanguera. O objetivo principal é manter um histórico dos projetos realizados, facilitar consultas futuras e treinar boas práticas de versionamento, organização de projetos e uso do Git.
+Este repositório é um monorepo criado para agrupar e organizar trabalhos acadêmicos desenvolvidos ao longo do curso **Superior de Tecnologia em Inteligência de Mercado e Análise de Dados** da **Anhanguera**. O objetivo principal é manter um histórico dos projetos realizados, facilitar consultas futuras e treinar boas práticas de versionamento, organização de projetos e uso do Git.
 
 ## Sobre o Monorepo
 

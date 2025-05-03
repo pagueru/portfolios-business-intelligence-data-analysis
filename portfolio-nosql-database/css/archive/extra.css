@@ -1,0 +1,23 @@
+@page {
+    margin-top: 40px;
+    margin-bottom: 0px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background: #0d1117;
+    size: A4;
+  }
+
+body{
+    /* Reduz a escala do conteúdo para 80% (ajuste conforme necessário) */
+    font-size: 12.8px; /* 80% de 16px */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Segoe UI";
+    font-weight: 600;
+  }

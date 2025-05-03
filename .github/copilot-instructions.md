@@ -2,59 +2,94 @@
 
 Projetos em Python devem seguir as Python Enhancement Proposals (PEPs), as convenções de nomenclatura e tipagem do Python, e as melhores práticas da linguagem. Além disso, as seguintes diretrizes específicas devem ser observadas ao sugerir ou gerar código:
 
-## 1. Nomeação e documentação
+## Diretrizes de Código e Estruturação de Projetos
+
+### Nomeação, Documentação e Tipagem
 
 * Nomeie variáveis, funções, classes e objetos similares em inglês.
-* Escreva comentários de código e docstrings em português do Brasil.
-* Prefira docstrings de linha única.
-  * Caso não seja possível, utilize o formato de docstrings do Google.
-* Todos os comentários devem ser escritos na linguagem imperativa, como: "trata", "corrige", "faz".
+* Escreva comentários de código e docstrings em português do Brasil, preferencialmente de linha única (ou formato Google se necessário), sempre na linguagem imperativa (ex: "trata", "corrige").
+* Utilize tipagem forte, priorizando tipos nativos (`str`, `int`, `list`, `dict`, etc.); use o módulo `typing` apenas quando necessário.
 
-## 2. Tipagem
+### Validação, Logging e Estrutura
 
-* Utilize tipagem forte nos scripts.
-  * Priorize a tipagem nativa (`str`, `int`, `list`, `dict`, etc.).
-  * Utilize o módulo `typing` apenas quando a tipagem nativa não for suficiente.
+* Garanta conformidade com `ruff`, `mypy` e `pylint`, resolvendo todos os avisos antes de submeter código.
+* Parâmetros booleanos em funções devem ser nomeados via asterisco (*).
+* Comentários de módulo no topo dos arquivos Python devem ser docstrings de linha única.
+* Use o módulo `logging` com a variável `logger` e `f-strings` para logs.
+* Estruture arquivos com `__init__.py` vazio e cabeçalho descritivo.
+* Utilize `pathlib` para manipulação de arquivos e diretórios.
 
-## 3. Validação de código e ferramentas
+### Commits e Dependências
 
-* Garanta que os scripts estejam em conformidade com as ferramentas de lint e análise estática:
-  * `ruff`
-  * `mypy`
-  * `pylint`
-* Antes de submeter ou aceitar sugestões de código, certifique-se de que:
-  * Todas as mensagens de erro ou aviso foram resolvidas.
-  * O código segue os padrões de lint, formatação e tipagem definidos por essas ferramentas.
-* Sempre que houver parâmetro booleano em funções, utilize o asterisco (*) para forçar o uso nomeado desse argumento.
-* Os comentários de módulo no topo dos arquivos Python devem ser docstrings de linha única, utilizando aspas triplas.
+* Escreva commits em português do Brasil.
+* Siga o padrão de commits convencionais: `init`, `feat`, `fix`, `update`, detalhando mudanças e motivos.
+* Use `poetry` para dependências e ambientes virtuais (`poetry add <dependência>`).
 
-## 4. Logging
+---
 
-* Use o módulo `logging` para registrar mensagens do sistema.
-* Sempre instancie uma variável `logger` ou utilize a variável `logger` já existente no código.
-* Utilize `f-strings` para a formatação de mensagens de log, em vez de `%s`.
+## Diretrizes de Uso de Ferramentas e Fluxo de Trabalho
 
-## 5. Estrutura de arquivos e módulos
+* Utilize todas as ferramentas disponíveis (Sequential Thinking, Brave Search, Puppeteer, Knowledge Graph) conforme necessário, sem exigir ativação explícita.
+* Inicie cada nova conversa com Sequential Thinking para definir as ferramentas necessárias.
 
-* Ao sugerir a criação de um arquivo Python, sempre inclua:
-  * Um arquivo `__init__.py` vazio no diretório do módulo, contendo apenas os comentários de cabeçalho padrão.
-  * Um comentário no cabeçalho do novo arquivo com uma breve descrição sobre o módulo/arquivo.
+### Fluxo de Trabalho Principal
 
-## 6. Manipulação de caminhos
+1. **Análise Inicial (Sequential Thinking):**
+   * Divida a consulta em componentes principais, conceitos e relações-chave.
+   * Planeje a estratégia de pesquisa e verificação, definindo as ferramentas para cada etapa.
+   * Exemplo: "Quais etapas são necessárias para responder à pergunta? Quais ferramentas usar em cada uma?"
 
-* Trabalhe com caminhos de arquivos e diretórios utilizando o módulo `pathlib`.
+2. **Pesquisa e Verificação (Brave Search & Puppeteer):**
+   * Realize pesquisas amplas e direcionadas, controlando volume (count, offset) e documentando consultas, URLs, títulos, datas e descrições.
+   * Navegue em sites relevantes, tire capturas de tela (sempre com URL e data/hora), extraia dados, explore links e registre caminhos de interação.
+   * Repita etapas de verificação se necessário.
+   * Exemplo de citação: "Título da página", URL, data de acesso: DD/MM/AAAA.
 
-## 7. Commits e versionamento
+3. **Processamento e Armazenamento (Knowledge Graph):**
+   * Analise/processo dados coletados, crie visualizações se útil e armazene descobertas importantes no Knowledge Graph, mantendo links e contexto das fontes.
 
-* Siga o padrão de commits convencionais, utilizando os seguintes tipos:
-  * `init`: inicializações importantes no projeto, como a configuração ou organização inicial da estrutura do ambiente.
-  * `feat`: adições de novas funcionalidades ao projeto, como novos módulos, processos ou scripts.
-  * `fix`: correções de erros ou bugs encontrados no projeto.
-  * `update`: ajustes ou melhorias que não introduzem novas funcionalidades nem corrigem erros.
-* Seja extremamente detalhado com as mudanças de arquivos de código e os motivos para as mudanças ao fazer um commit.
+4. **Síntese e Apresentação:**
+   * Estruture e combine informações de todas as ferramentas, apresente resultados de forma clara, destaque insights e gere artifacts (código, visualizações, documentos) conforme necessário.
 
-## 8. Gerenciamento de dependências
+### Documentação e Rastreabilidade
 
-* Utilizo `poetry` para gerenciar dependências e ambientes virtuais.
-* Ao sugerir a instalação de uma nova dependência, utilize o comando:  
-  `poetry add <dependência>`
+* Todas as fontes devem ser citadas com URLs completas, títulos, datas e metadados.
+* Capturas de tela devem conter URL de origem e carimbo de data/hora.
+* Descobertas devem ser rastreáveis até as fontes originais.
+* O Knowledge Graph deve manter links/contexto das fontes para reutilização futura.
+
+---
+
+## Diretrizes Específicas de Ferramentas
+
+### Brave Search
+
+* Controle volume de resultados (count, offset), documente consultas/resultados, rastreie caminhos e preserve metadados.
+
+### Puppeteer
+
+* Tire capturas de tela de evidências importantes (com URL/data/hora), use seletores precisos e documente caminhos. Repita tentativas em caso de erro.
+
+### Sequential Thinking
+
+* Divida tarefas complexas em etapas gerenciáveis, documente o processo de pensamento e permita revisões/ramificações.
+
+---
+
+## Notas de Implementação
+
+* Use ferramentas proativamente e, quando apropriado, em paralelo.
+* Documente cada etapa da análise.
+* Tarefas complexas devem acionar o fluxo de trabalho completo.
+* Gerencie a retenção de conhecimento entre conversas via Knowledge Graph.
+
+---
+
+### Exemplos Práticos
+
+* **Citação de fonte:**
+  * "Como usar o pathlib em Python", <https://docs.python.org/3/library/pathlib.html>, acesso em 02/05/2025.
+* **Docstring de função:**
+  * `"""Retorna o caminho absoluto do arquivo."""`
+* **Sequential Thinking:**
+  * 1. Identificar objetivo → 2. Listar etapas → 3. Definir ferramenta para cada etapa → 4. Executar e revisar.

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="css\custom-github-markdown.css" />
+</head>
+<body>
+<h1 id="portfolio-bancos-de-dados-não-relacionais">Portfolio — Bancos de
+Dados Não Relacionais</h1>
+<p>Este relatório tem como objetivo apresentar as atividades realizadas
+como parte dos requisitos para a avaliação parcial do semestre,
+aplicando conceitos de <strong>Bancos de Dados Não Relacionais</strong>.
+O foco principal é a criação e manipulação de um banco de dados não
+relacional no <strong>MongoDB Community Server</strong>, utilizando o
+<strong>MongoDB Compass</strong> para inserir e atualizar documentos em
+uma collection.</p>
+<h2 id="informações-adicionais">Informações Adicionais</h2>
+<blockquote>
+<p><strong>Nome:</strong> Raphael Henrique Vieira Coelho<br />
+<strong>Matrícula:</strong> 3481350205<br />
+<strong>Curso:</strong> Inteligência de Mercado e Análise de Dados<br />
+<strong>Instituição:</strong> Faculdade Anhanguera<br />
+<strong>Período:</strong> 5º Semestre / 2025<br />
+<strong>E-mail:</strong> <a href="mailto:raphael.phael@gmail.com"
+class="email">raphael.phael@gmail.com</a></p>
+</blockquote>
+<h3 id="atividades-propostas">Atividades Propostas</h3>
+<ul>
+<li>Criar um banco de dados no MongoDB Compass, inserir e atualizar
+documentos em uma collection.</li>
+<li>Realizar pesquisas e consultas em um banco de dados não relacional
+(MongoDB).</li>
+<li>Elaborar um relatório com as atividades realizadas, incluindo prints
+das telas e explicações sobre os processos executados, incluindo:
+Introdução, Metodologia, Resultados e Conclusão.</li>
+</ul>
+<h3 id="checklist">Checklist</h3>
+<ul>
+<li>Acessar o <strong>MongoDB Compass</strong></li>
+<li>Criar um banco de dados no <strong>MongoDB</strong></li>
+<li>Criar uma collection em um banco de dados</li>
+<li>Inserir documentos na collection criada</li>
+<li>Atualizar a collection <strong>vendas</strong> no banco de dados
+<strong>lojadb</strong> de acordo com as informações das tabelas.</li>
+<li>Navegar até a collection <strong>vendas</strong> do banco de dados
+<strong>lojadb</strong></li>
+<li>Realizar as 5 consultas especificadas.</li>
+</ul>
+<h2 id="introdução">1. Introdução</h2>
+<p>Este relatório detalha a prática realizada com o
+<strong>MongoDB</strong>, um banco de dados <strong>NoSQL</strong>
+orientado a documentos. O objetivo foi compreender os fundamentos de
+bancos não relacionais, utilizando inserções, atualizações e consultas
+sobre dados de clientes e suas compras.</p>
+<p>Diferentemente dos bancos de dados relacionais, os bancos NoSQL, como
+o MongoDB, oferecem flexibilidade de estrutura, escalabilidade
+horizontal e melhor desempenho para dados semiestruturados. São
+amplamente utilizados em aplicações modernas, como e-commerce, redes
+sociais e sistemas de recomendação.</p>
+<div style="page-break-after: always;">
+
+</div>
+<h2 id="métodos">2. Métodos</h2>
+<h3 id="configuração-do-ambiente-e-ferramentas">2.1 Configuração do
+Ambiente e Ferramentas</h3>
+<p>As seguintes ferramentas foram utilizadas:</p>
+<ul>
+<li><strong>MongoDB Community Server</strong>: O banco de dados NoSQL
+orientado a documentos.</li>
+<li><strong>MongoDB Compass</strong>: Interface gráfica para interagir
+com o banco de dados <strong>MongoDB</strong>.</li>
+<li><strong>VS Code</strong>: Editor de texto para documentação.</li>
+</ul>
+<h3 id="aquisição-e-preparação-dos-dados-procedimentoatividade-1">2.2
+Aquisição e Preparação dos Dados (Procedimento/Atividade № 1)</h3>
+<p>A atividade consistiu em criar um banco de dados
+<strong>lojadb</strong> para simular o contexto de uma loja, registrando
+informações de clientes e suas vendas. Estou utilizando o
+<strong>Shell</strong> para executar os comandos.</p>
+<h4 id="etapa-1-criação-do-banco-e-collection-e-inserção-inicial">Etapa
+1: Criação do Banco e Collection e Inserção Inicial</h4>
+<ol type="1">
+<li><p>Criação do banco de dados <strong>lojadb</strong> com a
+collection <strong>vendas</strong>.</p></li>
+<li><p>Inserção dos dados básicos dos clientes na collection
+<strong>vendas</strong>, onde o campo <strong>telefone</strong> é um
+array.</p>
+<ol type="a">
+<li>Criação do banco de dados <strong>lojadb</strong> e da collection
+<strong>vendas</strong>.</li>
+</ol>
+<p><img src="./images/1-criacao-banco-e-collection.png" width="900" alt="1-criacao-banco-e-collection" /></p>
+<div style="page-break-after: always;">
+
+</div>
+<ol start="2" type="a">
+<li>Inserção dos dados iniciais dos clientes.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-insertMany</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">insertMany</span>([</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;João&quot;</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;email&quot;</span><span class="op">:</span> <span class="st">&quot;joao@email.com&quot;</span><span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;telefone&quot;</span><span class="op">:</span> [<span class="st">&quot;9999-1111&quot;</span><span class="op">,</span> <span class="st">&quot;8888-1111&quot;</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span><span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;telefone&quot;</span><span class="op">:</span> [<span class="st">&quot;9999-2222&quot;</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span><span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;email&quot;</span><span class="op">:</span> <span class="st">&quot;maria@email.com&quot;</span><span class="op">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;telefone&quot;</span><span class="op">:</span> [<span class="st">&quot;9999-3333&quot;</span><span class="op">,</span> <span class="st">&quot;8888-3333&quot;</span><span class="op">,</span> <span class="st">&quot;9988-3000&quot;</span>]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div></li>
+</ol>
+<h4 id="etapa-2-atualização-dos-documentos">Etapa 2: Atualização dos
+Documentos</h4>
+<ol type="1">
+<li><p>Atualização com o campo <strong>endereço</strong> (objeto
+aninhado: <code>rua</code>, <code>numero</code>,
+<code>complemento</code>, <code>cidade</code>, <code>estado</code>).</p>
+<ol type="a">
+<li>Atualização do endereço de João.</li>
+</ol>
+<p><img src="./images/2-update-joao-1.png" width="900" alt="2-update-joao-1" /></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-joao-endereco</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;João&quot;</span> }<span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;endereco&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;rua&quot;</span><span class="op">:</span> <span class="st">&quot;Rua Um&quot;</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;numero&quot;</span><span class="op">:</span> <span class="dv">1000</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;complemento&quot;</span><span class="op">:</span> <span class="st">&quot;Apto 1 Bloco 1&quot;</span><span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cidade&quot;</span><span class="op">:</span> <span class="st">&quot;São Paulo&quot;</span><span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;estado&quot;</span><span class="op">:</span> <span class="st">&quot;SP&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="2" type="a">
+<li>Atualização do endereço de Marcos.</li>
+</ol>
+<p><img src="./images/3-update-marcos-1.png" width="900" alt="3-update-marcos-1.png" /></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-marcos-endereco</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span> }<span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;endereco&quot;</span><span class="op">:</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;rua&quot;</span><span class="op">:</span> <span class="st">&quot;Rua Dois&quot;</span><span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;numero&quot;</span><span class="op">:</span> <span class="dv">4000</span><span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cidade&quot;</span><span class="op">:</span> <span class="st">&quot;Campinas&quot;</span><span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;estado&quot;</span><span class="op">:</span> <span class="st">&quot;SP&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="3" type="a">
+<li>Atualização do endereço de Maria.</li>
+</ol>
+<p><img src="./images/4-update-maria-1.png" width="900" alt="4-update-maria-1.png" /></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-maria-endereco</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span> }<span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;endereco&quot;</span><span class="op">:</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;rua&quot;</span><span class="op">:</span> <span class="st">&quot;Rua Três&quot;</span><span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;numero&quot;</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cidade&quot;</span><span class="op">:</span> <span class="st">&quot;Londrina&quot;</span><span class="op">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;estado&quot;</span><span class="op">:</span> <span class="st">&quot;PR&quot;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="4" type="a">
+<li>Atualização geral dos endereços.</li>
+</ol>
+<p><img src="./images/5-update-geral-1.png" width="900" alt="5-update-geral-1.png" /></p></li>
+<li><p>Atualização com o campo <strong>compras</strong> (array de
+objetos: <code>nome_produto</code>, <code>preco</code>,
+<code>quantidade</code>).</p>
+<ol type="a">
+<li>Atualização das compras de João.</li>
+</ol>
+<p><img src="./images/6-update-joao-2.png" width="900" alt="6-update-joao-2" /></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-joao-compras</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;João&quot;</span> }<span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;compras&quot;</span><span class="op">:</span> [</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;notebook&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">5000.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="2" type="a">
+<li>Atualização das compras de Marcos.</li>
+</ol>
+<p><img src="./images/7-update-marcos-2.png" width="900" alt="7-update-marcos-2" /></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-marcos-compras</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span> }<span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;compras&quot;</span><span class="op">:</span> [</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;Caderno&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">20.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;Caneta&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">3.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">5</span> }</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="3" type="a">
+<li>Atualização das compras de Maria.</li>
+</ol>
+<p><img src="./images/8-update-maria-2.png" width="900" alt="8-update-maria-2" /></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-maria-compras</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span> }<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$set</span><span class="op">:</span> {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;compras&quot;</span><span class="op">:</span> [</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;Borracha&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">2.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">2</span> }<span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;Tablet&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">2500.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        { <span class="st">&quot;nome_produto&quot;</span><span class="op">:</span> <span class="st">&quot;Capa para tablet&quot;</span><span class="op">,</span> <span class="st">&quot;preco&quot;</span><span class="op">:</span> <span class="fl">50.00</span><span class="op">,</span> <span class="st">&quot;quantidade&quot;</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ol start="4" type="a">
+<li>Atualização geral das compras.</li>
+</ol>
+<p><img src="./images/9-update-geral-2.png" width="900" alt="9-update-geral-2.png" /></p></li>
+</ol>
+<h3 id="processamento-de-dados-procedimentoatividade-2">2.3
+Processamento de Dados (Procedimento/Atividade № 2)</h3>
+<p>Esta etapa focou na realização de queries na collection
+<strong>vendas</strong> do banco <strong>lojadb</strong>.</p>
+<ol type="1">
+<li><p>Consulta que retorna todos os documentos da collection.</p>
+<ol type="a">
+<li>Consulta para retornar todos os documentos.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-all</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/10-select-1.png" width="900" alt="10-select-1" /></p></li>
+<li><p>Consulta que localiza as informações da cliente “Maria”.</p>
+<ol type="a">
+<li>Consulta para localizar informações da cliente Maria.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-maria</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/11-select-2.png" width="900" alt="11-select-2" /></p></li>
+<li><p>Consulta que retorna o campo <code>nome</code> dos clientes
+<strong>VIPs</strong>.</p>
+<ol type="a">
+<li>Consulta para retornar nomes dos clientes VIPs.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-vips</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/12-select-3.png" width="900" alt="12-select-3" /></p></li>
+<li><p>Consulta que exibe as <strong>compras</strong> efetuadas por
+“Marcos”.</p>
+<ol type="a">
+<li>Consulta para exibir compras de Marcos.</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-marcos-compras</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span> }<span class="op">,</span> { <span class="st">&quot;compras&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/13-select-4.png" width="900" alt="13-select-4" /></p></li>
+<li><p>Consulta que retorna os <strong>nomes dos produtos</strong>
+distintos comprados por todos os clientes.</p>
+<ol type="a">
+<li>Consulta para retornar nomes dos produtos distintos.</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-distinct-produtos</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">distinct</span>(<span class="st">&quot;compras.nome_produto&quot;</span>)</span></code></pre></div>
+<p><img src="./images/14-select-5.png" width="900" alt="14-select-5" /></p></li>
+</ol>
+<h2 id="resultados">3. Resultados</h2>
+<p>As consultas realizadas na base <strong>lojadb</strong> permitiram
+observar, na prática, como o MongoDB lida com diferentes estruturas de
+dados. Os principais pontos identificados foram:</p>
+<ul>
+<li>A consulta geral mostrou que os dados foram inseridos e atualizados
+corretamente.</li>
+<li>A busca por nome facilitou encontrar informações específicas, como o
+registro da cliente <strong>Maria</strong>.</li>
+<li>A projeção de campos permitiu visualizar apenas os dados
+necessários, como os nomes dos clientes <strong>VIPs</strong>.</li>
+<li>Consultas em arrays e objetos aninhados, como as compras de cada
+cliente, mostraram a flexibilidade do modelo de documentos.</li>
+<li>A consulta de produtos distintos ajudou a identificar todos os itens
+comprados, sem repetições.</li>
+</ul>
+<p>Esses resultados mostram que o MongoDB pode ser útil em situações que
+exigem flexibilidade e consultas variadas, contribuindo para a análise
+dos dados de forma simples e eficiente.</p>
+<h2 id="conclusão">4. Conclusão</h2>
+<p>A atividade prática permitiu conhecer, de forma simples, o
+funcionamento do <strong>MongoDB</strong> para criar, atualizar e
+consultar dados em um banco não relacional. Foi possível perceber a
+flexibilidade do modelo de documentos e a facilidade para realizar
+consultas variadas. A experiência contribuiu para entender conceitos
+básicos de bancos de dados NoSQL e como aplicá-los em situações do dia a
+dia. O repositório com os arquivos do projeto pode ser acessado em <a
+href="https://github.com/pagueru/portfolios-business-intelligence-data-analysis/tree/master/portfolio-nosql-database">GitHub</a>.</p>
+<h2 id="referências-bibliográficas">5. Referências Bibliográficas</h2>
+<p>MongoDB. (2024). <em>MongoDB Documentation</em>. Disponível em: <a
+href="https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/">https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/</a><br />
+Markdown Community. (2024). The Markdown Guide. Disponível em: <a
+href="https://www.markdownguide.org/basic-syntax/">https://www.markdownguide.org/basic-syntax/</a><br />
+MongoDB. (2024). <em>O que é um banco de dados de documentos?</em>.
+Disponível em: <a
+href="https://www.mongodb.com/pt-br/resources/basics/databases/document-databases">https://www.mongodb.com/pt-br/resources/basics/databases/document-databases</a></p>
+</body>
+</html>

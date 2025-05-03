@@ -1,10 +1,12 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"name": "portfolio-nosql-database",
+			"path": "portfolio-nosql-database"
 		},
 		{
-			"path": "portfolio-nosql-database"
+			"name": "portfolios-business-intelligence-data-analysis",
+			"path": "."
 		}
 	],
 	"settings": {}
