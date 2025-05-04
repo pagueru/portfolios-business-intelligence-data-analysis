@@ -6,7 +6,7 @@ import subprocess
 
 from weasyprint import HTML
 
-from src.core.logger import get_logger
+from src.core.logger import logger
 
 
 class MarkdownToPdfConverter:
@@ -20,7 +20,6 @@ class MarkdownToPdfConverter:
         output_pdf: str,
     ) -> None:
         """Inicializa os caminhos e arquivos de conversão."""
-        self.logger = get_logger(__name__)
         self.input_md = Path(input_md)
         self.css_files = [Path(css) for css in css_files]
         self.html_output_path = Path(html_output_path)
@@ -28,7 +27,7 @@ class MarkdownToPdfConverter:
 
     def convert_md_to_html(self) -> None:
         """Converte arquivo Markdown em HTML aplicando CSS customizado."""
-        self.logger.info(f"Convertendo {self.input_md} para HTML com estilos {self.css_files}...")
+        logger.info(f"Convertendo {self.input_md} para HTML com estilos {self.css_files}...")
         pandoc_cmd: list[str] = [
             "pandoc",
             str(self.input_md),
@@ -41,17 +40,17 @@ class MarkdownToPdfConverter:
         try:
             subprocess.run(pandoc_cmd, check=True)  # noqa: S603
         except subprocess.CalledProcessError:
-            self.logger.exception("Erro ao converter Markdown para HTML")
+            logger.exception("Erro ao converter Markdown para HTML")
             raise
 
     def convert_html_to_pdf(self) -> None:
         """Converte arquivo HTML em PDF usando WeasyPrint."""
-        self.logger.info(f"Convertendo {self.html_output_path} para PDF...")
+        logger.info(f"Convertendo {self.html_output_path} para PDF...")
         try:
             HTML(str(self.html_output_path), base_url=".").write_pdf(str(self.output_pdf))
-            self.logger.info(f"PDF gerado com sucesso: {self.output_pdf}")
+            logger.info(f"PDF gerado com sucesso: {self.output_pdf}")
         except Exception:
-            self.logger.exception("Erro ao converter HTML para PDF.")
+            logger.exception("Erro ao converter HTML para PDF.")
             raise
 
     def run(self) -> None:

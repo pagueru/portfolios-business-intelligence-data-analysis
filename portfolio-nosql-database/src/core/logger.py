@@ -9,9 +9,5 @@ if not logging.getLogger().hasHandlers():
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=[logging.StreamHandler()],
     )
-logging.getLogger("weasyprint").setLevel(logging.ERROR)
-
-
-def get_logger(name: str) -> logging.Logger:
-    """Retorna instância de logger configurado."""
-    return logging.getLogger(name)
+logging.getLogger("weasyprint").setLevel(logging.CRITICAL)
+logger = logging.getLogger(__name__)

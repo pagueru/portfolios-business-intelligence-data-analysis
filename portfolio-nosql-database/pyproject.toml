@@ -17,6 +17,7 @@ dependencies = [
     "pyppeteer (>=2.0.0,<3.0.0)",
     "markdown (>=3.8,<4.0)",
     "pandocfilters (>=1.5.1,<2.0.0)",
+    "grip (>=4.6.2,<5.0.0)",
 ]
 
 [tool.poetry]

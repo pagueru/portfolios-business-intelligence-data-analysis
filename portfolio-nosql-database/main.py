@@ -1,14 +1,24 @@
 """Orquestra a execução dos processos de extração de codeblocks e conversão Markdown para PDF."""
 
+import sys
+
 from src.codeblock_extractor import CodeblockExtractor
-from src.core.logger import get_logger
+from src.core.logger import logger
 from src.markdown_pdf import MarkdownToPdfConverter
 
 MENU_OPTIONS = {
     "1": "Extrair codeblocks do Markdown",
     "2": "Converter Markdown em PDF",
-    "0": "Sair",
+    "0": "Finalizar",
 }
+
+# Constantes de configuração de caminhos e parâmetros
+MD_PATH = "./README.md"
+OUTPUT_DIR = "./querys"
+CODEBLOCK_LANG = "javascript"
+CSS_FILES = ["./css/custom-github-markdown-light.css"]
+HTML_OUTPUT_PATH = "./docs/README.html"
+OUTPUT_PDF = "./docs/relatorio-aula-pratica-3481350205.pdf"
 
 
 class ProcessRunner:
@@ -16,9 +26,8 @@ class ProcessRunner:
 
     def __init__(self) -> None:
         """Inicializa o logger do processo."""
-        self.logger = get_logger(__name__)
 
-    def print_terminal_line(self, value: int = 80, char: str = "-") -> None:
+    def print_terminal_line(self, value: int = 90, char: str = "-") -> None:
         """Imprime uma linha no terminal com o caractere especificado."""
         if value <= 0:
             msg = "O valor deve ser maior que 0."
@@ -31,21 +40,17 @@ class ProcessRunner:
             if clear_terminal:
                 print("\033[H\033[J", end="", flush=True)
             self.print_terminal_line()
-            self.logger.info("Iniciando o script.")
+            logger.info("Iniciando o script.")
         except RuntimeError:
-            self.logger.exception("Erro ao limpar o terminal.")
+            logger.exception("Erro ao limpar o terminal.")
 
     def show_menu(self) -> str:
         """Exibe o menu e retorna a opção escolhida pelo usuário."""
         self.print_terminal_line()
-        print("i Selecione uma opção:")
+        print("Selecione uma opção:")
         for key, desc in MENU_OPTIONS.items():
             print(f"{key} - {desc}")
         return input("➔ Opção: ").strip()
-
-    def _keyboard_exit(self) -> None:
-        """Interrompe a execução em formato `KeyboardInterrupt`."""
-        raise KeyboardInterrupt
 
     def run(self) -> None:
         """Executa o menu em loop até o usuário escolher sair."""
@@ -55,27 +60,33 @@ class ProcessRunner:
                 option = self.show_menu()
                 if option == "1":
                     extractor = CodeblockExtractor(
-                        md_path="./README.md",
-                        output_dir="./querys",
-                        codeblock_lang="javascript",
+                        md_path=MD_PATH,
+                        output_dir=OUTPUT_DIR,
+                        codeblock_lang=CODEBLOCK_LANG,
                     )
+                    self.print_terminal_line()
                     extractor.extract()
-                elif option == "2":
+                if option == "2":
                     converter = MarkdownToPdfConverter(
-                        input_md="./README.md",
-                        css_files=["./css/custom-github-markdown.css"],
-                        html_output_path="./docs/README.html",
-                        output_pdf="./docs/README.pdf",
+                        input_md=MD_PATH,
+                        css_files=CSS_FILES,
+                        html_output_path=HTML_OUTPUT_PATH,
+                        output_pdf=OUTPUT_PDF,
                     )
+                    self.print_terminal_line()
                     converter.run()
-                elif option == "0":
-                    self._keyboard_exit()
+                if option == "0":
+                    self.print_terminal_line()
+                    logger.info("Execução interrompida pelo usuário.")
+                    sys.exit()
                 else:
                     print("✖ Opção inválida. Tente novamente.")
         except KeyboardInterrupt:
-            print("0")
+            print()
             self.print_terminal_line()
-            self.logger.info("Execução interrompida pelo usuário.")
+            logger.info("Execução interrompida pelo usuário.")
+        finally:
+            self.print_terminal_line()
 
 
 if __name__ == "__main__":

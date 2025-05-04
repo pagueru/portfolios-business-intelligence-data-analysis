@@ -87,7 +87,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="css\custom-github-markdown.css" />
+  <link rel="stylesheet" href="css\custom-github-markdown-light.css" />
 </head>
 <body>
 <h1 id="portfolio-bancos-de-dados-não-relacionais">Portfolio — Bancos de
@@ -109,39 +109,44 @@ uma collection.</p>
 <strong>E-mail:</strong> <a href="mailto:raphael.phael@gmail.com"
 class="email">raphael.phael@gmail.com</a></p>
 </blockquote>
-<h3 id="atividades-propostas">Atividades Propostas</h3>
+<h2 id="atividades-propostas">Atividades Propostas</h2>
 <ul>
-<li>Criar um banco de dados no MongoDB Compass, inserir e atualizar
-documentos em uma collection.</li>
+<li>Criar um banco de dados no <strong>MongoDB Compass</strong>,
+<strong>inserir</strong> e <strong>atualizar</strong> documentos em uma
+collection.</li>
 <li>Realizar pesquisas e consultas em um banco de dados não relacional
-(MongoDB).</li>
+(<strong>MongoDB</strong>).</li>
 <li>Elaborar um relatório com as atividades realizadas, incluindo prints
 das telas e explicações sobre os processos executados, incluindo:
-Introdução, Metodologia, Resultados e Conclusão.</li>
+<strong>Introdução</strong>, <strong>Metodologia</strong>,
+<strong>Resultados</strong> e <strong>Conclusão</strong>.</li>
 </ul>
-<h3 id="checklist">Checklist</h3>
+<h2 id="checklist">Checklist</h2>
 <ul>
 <li>Acessar o <strong>MongoDB Compass</strong></li>
 <li>Criar um banco de dados no <strong>MongoDB</strong></li>
 <li>Criar uma collection em um banco de dados</li>
-<li>Inserir documentos na collection criada</li>
-<li>Atualizar a collection <strong>vendas</strong> no banco de dados
-<strong>lojadb</strong> de acordo com as informações das tabelas.</li>
-<li>Navegar até a collection <strong>vendas</strong> do banco de dados
-<strong>lojadb</strong></li>
+<li><strong>Inserir</strong> documentos na collection criada</li>
+<li><strong>Atualizar</strong> a collection <code>vendas</code> no banco
+de dados <code>lojadb</code> de acordo com as informações das
+tabelas.</li>
+<li>Navegar até a collection <code>vendas</code> do banco de dados
+<code>lojadb</code></li>
 <li>Realizar as 5 consultas especificadas.</li>
 </ul>
 <h2 id="introdução">1. Introdução</h2>
 <p>Este relatório detalha a prática realizada com o
 <strong>MongoDB</strong>, um banco de dados <strong>NoSQL</strong>
 orientado a documentos. O objetivo foi compreender os fundamentos de
-bancos não relacionais, utilizando inserções, atualizações e consultas
-sobre dados de clientes e suas compras.</p>
-<p>Diferentemente dos bancos de dados relacionais, os bancos NoSQL, como
-o MongoDB, oferecem flexibilidade de estrutura, escalabilidade
-horizontal e melhor desempenho para dados semiestruturados. São
-amplamente utilizados em aplicações modernas, como e-commerce, redes
-sociais e sistemas de recomendação.</p>
+bancos não relacionais, utilizando <strong>inserções</strong>,
+<strong>atualizações</strong> e consultas sobre dados de clientes e suas
+compras.</p>
+<p>Diferentemente dos bancos de dados relacionais, os bancos
+<strong>NoSQL</strong>, como o <strong>MongoDB</strong>, oferecem
+flexibilidade de estrutura, escalabilidade horizontal e melhor
+desempenho para dados semiestruturados. São amplamente utilizados em
+aplicações modernas, como e-commerce, redes sociais e sistemas de
+recomendação.</p>
 <div style="page-break-after: always;">
 
 </div>
@@ -150,37 +155,30 @@ sociais e sistemas de recomendação.</p>
 Ambiente e Ferramentas</h3>
 <p>As seguintes ferramentas foram utilizadas:</p>
 <ul>
-<li><strong>MongoDB Community Server</strong>: O banco de dados NoSQL
-orientado a documentos.</li>
+<li><strong>MongoDB Community Server</strong>: O banco de dados
+<strong>NoSQL</strong> orientado a documentos.</li>
 <li><strong>MongoDB Compass</strong>: Interface gráfica para interagir
 com o banco de dados <strong>MongoDB</strong>.</li>
-<li><strong>VS Code</strong>: Editor de texto para documentação.</li>
+<li><strong>VS Code</strong>: Editor de texto para geração da
+documentação e arquivos auxiliares.</li>
 </ul>
 <h3 id="aquisição-e-preparação-dos-dados-procedimentoatividade-1">2.2
 Aquisição e Preparação dos Dados (Procedimento/Atividade № 1)</h3>
-<p>A atividade consistiu em criar um banco de dados
-<strong>lojadb</strong> para simular o contexto de uma loja, registrando
-informações de clientes e suas vendas. Estou utilizando o
-<strong>Shell</strong> para executar os comandos.</p>
-<h4 id="etapa-1-criação-do-banco-e-collection-e-inserção-inicial">Etapa
-1: Criação do Banco e Collection e Inserção Inicial</h4>
+<p>A atividade consistiu em criar um banco de dados <code>lojadb</code>
+para simular o contexto de uma loja, registrando informações de clientes
+e suas vendas. Estou utilizando o <strong>shell</strong> para executar
+os comandos.</p>
+<h3 id="etapa-1-criação-do-banco-e-collection-e-inserção-inicial">Etapa
+1: Criação do Banco e Collection e Inserção Inicial</h3>
 <ol type="1">
-<li><p>Criação do banco de dados <strong>lojadb</strong> com a
-collection <strong>vendas</strong>.</p></li>
-<li><p>Inserção dos dados básicos dos clientes na collection
-<strong>vendas</strong>, onde o campo <strong>telefone</strong> é um
-array.</p>
-<ol type="a">
-<li>Criação do banco de dados <strong>lojadb</strong> e da collection
-<strong>vendas</strong>.</li>
-</ol>
+<li><p>Criação do banco de dados <code>lojadb</code> com a collection
+<code>vendas</code>.</p>
 <p><img src="./images/1-criacao-banco-e-collection.png" width="900" alt="1-criacao-banco-e-collection" /></p>
 <div style="page-break-after: always;">
 
-</div>
-<ol start="2" type="a">
-<li>Inserção dos dados iniciais dos clientes.</li>
-</ol>
+</div></li>
+<li><p>Inserção dos dados básicos dos clientes na collection
+<code>vendas</code>, onde o campo <code>telefone</code> é um array.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-insertMany</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">insertMany</span>([</span>
@@ -203,16 +201,15 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div></li>
 </ol>
-<h4 id="etapa-2-atualização-dos-documentos">Etapa 2: Atualização dos
-Documentos</h4>
+<h3 id="etapa-2-atualização-dos-documentos">Etapa 2: Atualização dos
+Documentos</h3>
 <ol type="1">
-<li><p>Atualização com o campo <strong>endereço</strong> (objeto
-aninhado: <code>rua</code>, <code>numero</code>,
-<code>complemento</code>, <code>cidade</code>, <code>estado</code>).</p>
+<li><p>Atualização com o campo <code>endereco</code> (objeto aninhado:
+<code>rua</code>, <code>numero</code>, <code>complemento</code>,
+<code>cidade</code>, <code>estado</code>).</p>
 <ol type="a">
 <li>Atualização do endereço de João.</li>
 </ol>
-<p><img src="./images/2-update-joao-1.png" width="900" alt="2-update-joao-1" /></p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-joao-endereco</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -232,7 +229,6 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-
 <ol start="2" type="a">
 <li>Atualização do endereço de Marcos.</li>
 </ol>
-<p><img src="./images/3-update-marcos-1.png" width="900" alt="3-update-marcos-1.png" /></p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-marcos-endereco</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -251,7 +247,6 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-
 <ol start="3" type="a">
 <li>Atualização do endereço de Maria.</li>
 </ol>
-<p><img src="./images/4-update-maria-1.png" width="900" alt="4-update-maria-1.png" /></p>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-maria-endereco</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -266,18 +261,13 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      }</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<ol start="4" type="a">
-<li>Atualização geral dos endereços.</li>
-</ol>
-<p><img src="./images/5-update-geral-1.png" width="900" alt="5-update-geral-1.png" /></p></li>
-<li><p>Atualização com o campo <strong>compras</strong> (array de
-objetos: <code>nome_produto</code>, <code>preco</code>,
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div></li>
+<li><p>Atualização com o campo <code>compras</code> (array de objetos:
+<code>nome_produto</code>, <code>preco</code>,
 <code>quantidade</code>).</p>
 <ol type="a">
 <li>Atualização das compras de João.</li>
 </ol>
-<p><img src="./images/6-update-joao-2.png" width="900" alt="6-update-joao-2" /></p>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-joao-compras</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -293,7 +283,6 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-
 <ol start="2" type="a">
 <li>Atualização das compras de Marcos.</li>
 </ol>
-<p><img src="./images/7-update-marcos-2.png" width="900" alt="7-update-marcos-2" /></p>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-marcos-compras</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -310,7 +299,6 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-
 <ol start="3" type="a">
 <li>Atualização das compras de Maria.</li>
 </ol>
-<p><img src="./images/8-update-maria-2.png" width="900" alt="8-update-maria-2" /></p>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-update-maria-compras</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">updateOne</span>(</span>
@@ -324,93 +312,94 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      ]</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<ol start="4" type="a">
-<li>Atualização geral das compras.</li>
-</ol>
-<p><img src="./images/9-update-geral-2.png" width="900" alt="9-update-geral-2.png" /></p></li>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div></li>
 </ol>
 <h3 id="processamento-de-dados-procedimentoatividade-2">2.3
 Processamento de Dados (Procedimento/Atividade № 2)</h3>
-<p>Esta etapa focou na realização de queries na collection
-<strong>vendas</strong> do banco <strong>lojadb</strong>.</p>
+<p>Esta etapa focou na execução das 5 queries sugeridas na
+atividade.</p>
 <ol type="1">
-<li><p>Consulta que retorna todos os documentos da collection.</p>
-<ol type="a">
-<li>Consulta para retornar todos os documentos.</li>
-</ol>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-all</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
-<p><img src="./images/10-select-1.png" width="900" alt="10-select-1" /></p></li>
 <li><p>Consulta que localiza as informações da cliente “Maria”.</p>
-<ol type="a">
-<li>Consulta para localizar informações da cliente Maria.</li>
-</ol>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-maria</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
-<p><img src="./images/11-select-2.png" width="900" alt="11-select-2" /></p></li>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-maria</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Maria&quot;</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/db-vendas-find-maria.png" width="900" alt="db-vendas-find-maria" /></p>
+<div style="page-break-after: always;">
+
+</div></li>
 <li><p>Consulta que retorna o campo <code>nome</code> dos clientes
-<strong>VIPs</strong>.</p>
-<ol type="a">
-<li>Consulta para retornar nomes dos clientes VIPs.</li>
-</ol>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-vips</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
-<p><img src="./images/12-select-3.png" width="900" alt="12-select-3" /></p></li>
-<li><p>Consulta que exibe as <strong>compras</strong> efetuadas por
+VIPs.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-vips</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;vip&quot;</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/db-vendas-find-vips.png" width="900" alt="db-vendas-find-vips" /></p></li>
+<li><p>Consulta que exibe as <code>compras</code> efetuadas por
 “Marcos”.</p>
-<ol type="a">
-<li>Consulta para exibir compras de Marcos.</li>
-</ol>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-marcos-compras</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span> }<span class="op">,</span> { <span class="st">&quot;compras&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
-<p><img src="./images/13-select-4.png" width="900" alt="13-select-4" /></p></li>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-marcos-compras</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>({ <span class="st">&quot;nome&quot;</span><span class="op">:</span> <span class="st">&quot;Marcos&quot;</span> }<span class="op">,</span> { <span class="st">&quot;compras&quot;</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&quot;_id&quot;</span><span class="op">:</span> <span class="dv">0</span> })<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/db-vendas-find-marcos-compras.png" width="900" alt="db-vendas-find-marcos-compras" /></p>
+<div style="page-break-after: always;">
+
+</div></li>
 <li><p>Consulta que retorna os <strong>nomes dos produtos</strong>
 distintos comprados por todos os clientes.</p>
-<ol type="a">
-<li>Consulta para retornar nomes dos produtos distintos.</li>
-</ol>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-distinct-produtos</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">distinct</span>(<span class="st">&quot;compras.nome_produto&quot;</span>)</span></code></pre></div>
+<p><img src="./images/db-vendas-distinct-produtos.png" width="900" alt="db-vendas-distinct-produtos" /></p>
+<div style="page-break-after: always;">
+
+</div></li>
+<li><p>Consulta que retorna todos os documentos da collection.</p>
 <div class="sourceCode" id="cb12"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-distinct-produtos</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">distinct</span>(<span class="st">&quot;compras.nome_produto&quot;</span>)</span></code></pre></div>
-<p><img src="./images/14-select-5.png" width="900" alt="14-select-5" /></p></li>
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// db-vendas-find-all</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="at">vendas</span><span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">pretty</span>()</span></code></pre></div>
+<p><img src="./images/db-vendas-find-all.png" width="900" alt="db-vendas-find-all" /></p></li>
 </ol>
+<div style="page-break-after: always;">
+
+</div>
 <h2 id="resultados">3. Resultados</h2>
-<p>As consultas realizadas na base <strong>lojadb</strong> permitiram
-observar, na prática, como o MongoDB lida com diferentes estruturas de
-dados. Os principais pontos identificados foram:</p>
+<p>As consultas realizadas na base <code>lojadb</code> permitiram
+observar, na prática, como o <strong>MongoDB</strong> lida com
+diferentes estruturas de dados. Os principais pontos identificados
+foram:</p>
 <ul>
-<li>A consulta geral mostrou que os dados foram inseridos e atualizados
+<li>A consulta geral mostrou que os dados foram
+<strong>inseridos</strong> e <strong>atualizados</strong>
 corretamente.</li>
 <li>A busca por nome facilitou encontrar informações específicas, como o
 registro da cliente <strong>Maria</strong>.</li>
 <li>A projeção de campos permitiu visualizar apenas os dados
 necessários, como os nomes dos clientes <strong>VIPs</strong>.</li>
-<li>Consultas em arrays e objetos aninhados, como as compras de cada
-cliente, mostraram a flexibilidade do modelo de documentos.</li>
+<li>Consultas em arrays e objetos aninhados, como as
+<code>compras</code> de cada cliente, mostraram a flexibilidade do
+modelo de documentos.</li>
 <li>A consulta de produtos distintos ajudou a identificar todos os itens
 comprados, sem repetições.</li>
 </ul>
-<p>Esses resultados mostram que o MongoDB pode ser útil em situações que
-exigem flexibilidade e consultas variadas, contribuindo para a análise
-dos dados de forma simples e eficiente.</p>
+<p>Esses resultados mostram que o <strong>MongoDB</strong> pode ser útil
+em situações que exigem flexibilidade e consultas variadas, contribuindo
+para a análise dos dados de forma simples e eficiente.</p>
+<p><img src="./images/2-visao-geral-collections.png" width="900" alt="2-visao-geral-collections" /></p>
 <h2 id="conclusão">4. Conclusão</h2>
 <p>A atividade prática permitiu conhecer, de forma simples, o
 funcionamento do <strong>MongoDB</strong> para criar, atualizar e
 consultar dados em um banco não relacional. Foi possível perceber a
 flexibilidade do modelo de documentos e a facilidade para realizar
 consultas variadas. A experiência contribuiu para entender conceitos
-básicos de bancos de dados NoSQL e como aplicá-los em situações do dia a
-dia. O repositório com os arquivos do projeto pode ser acessado em <a
+básicos de bancos de dados <strong>NoSQL</strong> e como aplicá-los em
+situações do dia a dia.</p>
+<p>Como complemento, os arquivos utilizados durante a atividade —
+incluindo scripts e consultas — estão disponíveis no repositório do
+projeto no <a
 href="https://github.com/pagueru/portfolios-business-intelligence-data-analysis/tree/master/portfolio-nosql-database">GitHub</a>.</p>
 <h2 id="referências-bibliográficas">5. Referências Bibliográficas</h2>
 <p>MongoDB. (2024). <em>MongoDB Documentation</em>. Disponível em: <a
 href="https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/">https://www.mongodb.com/pt-br/docs/mongodb-shell/crud/</a><br />
-Markdown Community. (2024). The Markdown Guide. Disponível em: <a
+Markdown Community. (2024). <em>The Markdown Guide</em>. Disponível em:
+<a
 href="https://www.markdownguide.org/basic-syntax/">https://www.markdownguide.org/basic-syntax/</a><br />
 MongoDB. (2024). <em>O que é um banco de dados de documentos?</em>.
 Disponível em: <a
