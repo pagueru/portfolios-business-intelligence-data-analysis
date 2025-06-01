@@ -1,0 +1,15 @@
+# Configuração do logger
+logger:
+  file:
+    enabled: true
+    level: "INFO"
+    path: "logs/app.log"
+  console:
+    level: "INFO"
+  suppress:
+    - "pandas only supports SQLAlchemy connectable"
+  ignore_libs:
+    - "httpx"
+
+# Configuração do GoodReads
+goodreads:

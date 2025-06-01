@@ -1,6 +1,10 @@
 {
 	"folders": [
 		{
+			"name": "portfolio-web-analytics",
+			"path": "portfolio-web-analytics"
+		},
+		{
 			"name": "portfolio-nosql-database",
 			"path": "portfolio-nosql-database"
 		},

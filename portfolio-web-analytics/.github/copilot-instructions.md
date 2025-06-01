@@ -2,7 +2,7 @@
 
 ## Diretrizes de Uso de Ferramentas e Fluxo de Trabalho
 
-* Utilize todas as ferramentas disponíveis (Sequential Thinking, Brave Search, Puppeteer, Knowledge Graph) conforme necessário, sem exigir ativação explícita.
+* Utilize todas as ferramentas disponíveis (Sequential Thinking, Brave Search, Knowledge Graph) conforme necessário, sem exigir ativação explícita.
 * Inicie cada nova conversa com Sequential Thinking (`#sequentialthinking`) para definir as ferramentas necessárias.
 
 ### Fluxo de Trabalho Principal
@@ -22,7 +22,7 @@
         3. **Definir ferramenta para cada etapa:** Brave Search para pesquisa, Python para implementação e teste.
         4. **Executar e revisar:** Implementar, testar e ajustar o código conforme necessário.
 
-2. **Pesquisa e Verificação (Brave Search & Puppeteer):**
+2. **Pesquisa e Verificação (Brave Search):**
     * Realize pesquisas amplas e direcionadas, controlando volume (count, offset) e documentando consultas, URLs, títulos, datas e descrições.
     * Navegue em sites relevantes, tire capturas de tela (sempre com URL e data/hora), extraia dados, explore links e registre caminhos de interação.
     * Repita etapas de verificação se necessário.
@@ -81,9 +81,13 @@ Projetos em Python devem seguir as Python Enhancement Proposals (PEPs), as conve
 * Garanta conformidade com `ruff`, `mypy` e `pylint`, resolvendo todos os avisos antes de submeter código.
 * Parâmetros booleanos em funções devem ser keyword-only (usando `*` na assinatura da função).
 * Comentários de módulo no topo dos arquivos Python devem ser docstrings de linha única.
-* Use o módulo `logging` com a variável `logger` e f-strings para logs.
+* Majoritariamente utilizee f-strings para formatação de strings.
+* Use o módulo `logging` com a variável `logger` f-strings para logs.
 * Estruture arquivos com `__init__.py` vazio e cabeçalho descritivo (docstring de linha única no topo).
 * Utilize `pathlib` para manipulação de arquivos e diretórios.
+* A docstring do método `__init__` deve seguir o padrão: `"""Inicializa a classe."""`
+* Ao implementar alterações em código ou sugestões, preserve sempre todos os comentários e marcações TODO existentes.
+* Sempre que lançar exceção com raise, utilize o método `logger.exception` para registrar a exceção.
 
 ### Commits e Dependências
 
@@ -101,3 +105,16 @@ Projetos em Python devem seguir as Python Enhancement Proposals (PEPs), as conve
   * """Retorne o caminho absoluto do arquivo."""
 * **Sequential Thinking:**
   * 1. Identificar objetivo → 2. Listar etapas → 3. Definir ferramenta para cada etapa → 4. Executar e revisar.
+* **Utilizacao de blocos `try...except`:**
+    1. Caso esteja usando a função `echo`, utilize:
+        ```python	
+        except <ExceptionName> as exc:
+            echo(f"<mensagem_de_erro>: {exc}", "error")
+            raise
+        ```
+    2. Caso esteja usando o `logger`, utilize:
+        ```python	
+        except <ExceptionName>:
+            logger.exception("<mensagem_de_erro>.")
+            raise
+        ```

@@ -1,5 +1,5 @@
 [project]
-name = "portfolio-nosql-database"
+name = "portfolio-web-analytics"
 version = "0.1.0"
 description = ""
 authors = [
@@ -9,15 +9,16 @@ readme = "README.md"
 requires-python = ">=3.13"
 
 dependencies = [
-    "PyYaml==6.0.1",
-    "pandas (>=2.2.3,<3.0.0)",
-    "faker (>=37.0.2,<38.0.0)",
-    "weasyprint (>=65.1,<66.0)",
-    "pdfkit (>=1.0.0,<2.0.0)",
-    "pyppeteer (>=2.0.0,<3.0.0)",
-    "markdown (>=3.8,<4.0)",
-    "pandocfilters (>=1.5.1,<2.0.0)",
-    "grip (>=4.6.2,<5.0.0)",
+    "PyYaml>=6.0.2,<7.0.0",
+    "beautifulsoup4>=4.13.4,<5.0.0",
+    "pandas>=2.2.3,<3.0.0",
+    "lxml[html-clean]>=5.4.0,<6.0.0",
+    "requests>=2.32.3",
+    "httpx>=0.28.1",
+    "kagglehub>=0.3.12",
+    "chardet>=5.2.0",
+    "ipykernel>=6.29.5",
+    "tabulate>=0.9.0",
 ]
 
 [project.optional-dependencies]
@@ -27,6 +28,7 @@ dev = [
     "pre-commit>=4.0.1",
     "pytest-cov>=6.0.0",
     "mypy>=1.15.0",
+    "black>=25.1.0",
 ]
 
 [tool.pylint]
@@ -46,10 +48,7 @@ disable = [
 
 [tool.ruff]
 lint.select = ["ALL"]    # Ativar todas as regras de linting, análise e estilo
-fix = true               # Ativar correções automáticas
 lint.unfixable = []      # Permitir todas as correções
-line-length = 100        # Definir o comprimento da linha para 100 caracteres
-target-version = "py313" # Compatível com Python 3.13
 lint.ignore = [
     "D203",              # Conflito com D211 (linha em branco antes da classe)
     "D212",              # Conflito com D213 (resumo na primeira linha)
@@ -63,6 +62,7 @@ lint.ignore = [
     "T203",              # Permite o uso de `pprint`
     "ANN401",            # Permite o uso de `Any` em um `return`
     "S105",              # Permite o uso de hardcoded password
+    "TRY003",            # Permite o uso de mensagens longas fora da classe de exceção
 
     # REMOVER NO FINAL DO PROJETO
     "D100",              # docstring
@@ -79,15 +79,19 @@ lint.ignore = [
     "FIX001",            # Permite `FIXME` sem descrição detalhada
     "FIX003",            # Permite `FIXME` sem link para issue
     "FIX002",            # Permite `FIXME` sem ser tratado como erro crítico
-]
-exclude = [
-    ".venv",
-    "__pycache__",
+    "EM101",             # Permite o uso de string literal diretamente em exceções
 ]
 
 # Ordenação automática de imports (substitui o isort)
 lint.isort.force-sort-within-sections = true # Forçar a ordenação dentro de seções
 lint.isort.combine-as-imports = true         # Permitir importações combinadas
+fix = true               # Ativar correções automáticas
+line-length = 100        # Definir o comprimento da linha para 100 caracteres
+target-version = "py313" # Compatível com Python 3.13
+exclude = [
+    ".venv",
+    "__pycache__",
+]
 
 [tool.ruff.format]
 quote-style = "double"            # Usar aspas duplas (Black)
@@ -106,7 +110,7 @@ allow-star-arg-any = false        # Não permitir *args e **kwargs sem anotaçõ
 [tool.mypy]
 strict = true                     # Ativa as verificações estritas
 ignore_missing_imports = true     # Ignora erros de importação ausente
-disable_error_code = ["import-untyped"]
+disable_error_code = ["import-untyped", "return", "no-any-return", "dict-item"]
 exclude = ".venv"
 
 [tool.pytest.ini_options]

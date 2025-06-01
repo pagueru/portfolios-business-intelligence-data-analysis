@@ -24,6 +24,6 @@ TAB     = "  "
 TITLE   = $(BOLD)
 
 # Definição de variáveis
-APP_NAME=portfolio-nosql-database
+APP_NAME=portfolio-web-analytics
 MONOREPO_NAME=portfolios-business-intelligence-data-analysis
 IMAGE=$(APP_NAME):latest

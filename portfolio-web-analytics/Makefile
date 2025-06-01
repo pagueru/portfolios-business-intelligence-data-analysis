@@ -40,10 +40,9 @@ clean.venv: ## Remove o ambiente virtual do projeto
 		echo -e "$(WARN) .venv já removido"; \
 	fi
 
-start: ## Inicializa a aplicação em produção
+run: ## Inicializa a aplicação em produção
 	@echo -e "$(INFO) Iniciando aplicação..."
-	@if [ ! -d ".venv" ]; then echo -e "$(WARN) Ambiente virtual não encontrado! Criando..."; poetry install; fi
-	@poetry run python src/main.py
+	@uv run main.py
 
 start.docker: ## Inicializa o docker-compose em segundo plano
 	@echo -e "$(INFO) Inicializando docker-compose em segundo plano..."

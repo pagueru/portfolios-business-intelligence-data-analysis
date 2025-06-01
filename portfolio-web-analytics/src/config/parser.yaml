@@ -1,0 +1,91 @@
+# Título do livro - obtém o texto do elemento h1 com data-testid="bookTitle"
+# Exemplo: "Goodnight Punpun Omnibus, Vol. 1"
+title:
+  name: h1
+  attrs:
+    data-testid: bookTitle
+
+# Nome do autor - obtém o texto do elemento span com data-testid="name"
+# Exemplo: "Inio Asano"
+autor:
+  name: span
+  attrs:
+    data-testid: name
+
+# URL do perfil do autor - obtém o atributo href do link do autor
+# Exemplo: "https://www.goodreads.com/author/show/685523.Inio_Asano"
+autor_url:
+  name: a
+  attrs:
+    class: ContributorLink
+  attr: href
+
+# Estatísticas do autor (número de livros e seguidores) - obtém o texto dentro do container do perfil
+# Exemplo: "107 books 2,549 followers"
+autor_stats:
+  parent:
+    name: div
+    attrs:
+      class: FeaturedPerson__container
+  name: span
+  attrs:
+    class: Text Text__body3 Text__subdued
+
+# Biografia do autor - busca por texto formatado após um divisor específico
+# Exemplo: null (no HTML fornecido, a biografia está vazia)
+author_bio:
+  parent:
+    name: hr
+    attrs:
+      class: Divider Divider--largeMargin
+      role: presentation
+  name: span
+  attrs:
+    class: Formatted
+
+# Avaliação média do livro - obtém a nota numérica
+# Exemplo: "4.27"
+rating:
+  name: div
+  attrs:
+    class: RatingStatistics__rating
+
+# Número total de avaliações - obtém o texto com contagem de ratings
+# Exemplo: "20,283 ratings"
+ratings_count:
+  name: span
+  attrs:
+    data-testid: ratingsCount
+
+# Número total de resenhas - obtém o texto com contagem de reviews
+# Exemplo: "1,977 reviews"
+reviews:
+  name: span
+  attrs:
+    data-testid: reviewsCount
+
+# Descrição/sinopse do livro - obtém o texto formatado dentro da seção de descrição
+# Exemplo: "Meet Punpun Punyama. He's an average kid in an average town. He wants to win a Nobel Prize and save the world. He wants to go far away with his true love. He wants to find some porn. But Punpun's life is about to unravel…"
+description:
+  parent:
+    name: div
+    attrs:
+      class: BookPageMetadataSection__description
+      data-testid: description
+  name: span
+  attrs:
+    class: Formatted
+
+# Informações sobre o formato físico (páginas e tipo de capa)
+# Exemplo: "426 pages, Paperback"
+paperback:
+  name: p
+  attrs:
+    data-testid: pagesFormat
+
+# Informações sobre a publicação (data de primeira publicação)
+# Exemplo: "First published January 1, 2006"
+publication:
+  name: p
+  attrs:
+    data-testid: publicationInfo
