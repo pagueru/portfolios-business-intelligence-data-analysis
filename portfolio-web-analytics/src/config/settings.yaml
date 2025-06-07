@@ -1,3 +1,20 @@
+# Configuração do GoodReads
+goodreads:
+  book_url_base: "https://www.goodreads.com/book/show/"
+  search_url_base: "https://www.goodreads.com/search?query="
+  search_book_title: "PunPun"
+  cache_seconds: 600  # 600 seg = 10 min
+  book_fallback: "25986929-goodnight-punpun-omnibus-vol-1"
+
+# Configuração do Kaggle
+kaggle:
+  manga_name: "PunPun"
+  dataset_name: "duongtruongbinh/manga-and-anime-dataset"
+  dataset_files:
+    - "manga.csv"
+    # - "anime.csv"
+  force_download: false
+
 # Configuração do logger
 logger:
   file:
@@ -10,6 +27,3 @@ logger:
     - "pandas only supports SQLAlchemy connectable"
   ignore_libs:
     - "httpx"
-
-# Configuração do GoodReads
-goodreads:

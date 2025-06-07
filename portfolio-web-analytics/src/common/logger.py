@@ -3,7 +3,6 @@
 import json
 import logging
 from pathlib import Path
-import shutil
 from typing import Any, ClassVar, Optional
 import warnings
 
@@ -19,11 +18,16 @@ from src.core.errors import LoggerError
 class LoggerSingleton(BaseClass):
     """Singleton para gerenciamento centralizado de logging."""
 
-    _instance: ClassVar[Optional["LoggerSingleton"]] = None  # Singleton: instância única da classe
-    _initialized: bool = False  # Indica se o logger foi inicializado
-    logger: logging.Logger | None = None  # Objeto Logger para registrar logs
+    _instance: ClassVar[Optional["LoggerSingleton"]] = None
+    """Instância única do LoggerSingleton."""
 
-    def __new__(cls, config: dict[str, Any] | None = None) -> "LoggerSingleton":  # noqa: ARG004
+    _initialized: bool = False
+    """Indica se o logger foi inicializado."""
+
+    logger: logging.Logger | None = None
+    """Logger configurado para uso na aplicação."""
+
+    def __new__(cls) -> "LoggerSingleton":
         """Cria ou retorna a instância única da classe Singleton."""
         if cls._instance is None:
             cls._instance = super().__new__(cls)
@@ -34,39 +38,67 @@ class LoggerSingleton(BaseClass):
         if self._initialized:
             return
 
-        # Usa o config fornecido ou tenta carregar do arquivo
-        if config is None:
-            config = self.load_config_from_yaml(SETTINGS_FILE)
-            if config is None:
-                config = self.get_default_config()
+        config = config if config else self._load_config_from_yaml(SETTINGS_FILE)
+        """Carrega a configuração do logger a partir de um dicionário ou arquivo YAML."""
 
-        self._assign_config(config)  # Atribua configurações do dicionário à instância
-        logger_instance = self._define_handlers()  # Crie e configure o logger com handlers
-        self._logger = logger_instance  # Armazene o logger como atributo privado
-        self.logger = logger_instance  # Garanta que o atributo público logger seja preenchido
-        LoggerSingleton.logger = logger_instance  # Compartilhe o logger no singleton
-        self._initialized = True  # Marque a instância como inicializada
+        # Atribui as configurações do dicionário às variáveis da classe.
+        self._assign_config(config)
+
+        logger_instance = self._define_handlers()
+        """Configura o logger com handlers para console e arquivo (opcional)."""
+
+        self.logger = logger_instance
+        """Armazena o logger configurado como atributo público."""
+
+        # Compartilhe o logger no singleton
+        LoggerSingleton.logger = logger_instance
+
+        # Marque a instância como inicializada
+        self._initialized = True
+
+    def __getattr__(self, name: str) -> Any:
+        """Delegar chamadas de métodos ao logger interno."""
+        self._ensure_initialized()
+        if hasattr(self.logger, name):
+            return getattr(self.logger, name)
+        msg = f"Objeto '{type(self).__name__}' não possui o atributo '{name}'"
+        raise AttributeError(msg)
 
     def _ensure_initialized(self) -> None:
         """Garante que o logger está inicializado."""
         if not self._initialized:
             self.__class__()  # Cria nova instância que será retornada pelo singleton
 
-    def load_config_from_yaml(self, file_path: PathLike) -> LoggerDict | None:
-        """Carrega a configuração do logger a partir de um arquivo YAML."""
+    def _raise_missing_keys(self, required_keys: set[str]) -> None:
+        msg = f"Configuração inválida: chaves obrigatórias ausentes. Esperado: {required_keys}"
+        echo(msg, "error")
+        raise KeyError(msg)
+
+    def _load_config_from_yaml(self, file_path: PathLike) -> LoggerDict:
+        """Carrega a configuração do logger a partir do arquivo YAML ou a configuração padrão."""
         file_path = super()._ensure_path(file_path)
         if not file_path.is_file():
-            echo(f"O arquivo de configuração {file_path} não foi encontrado.", "warn")
-            return None
+            echo(
+                f"O arquivo de configuração {file_path} não foi encontrado. "
+                "Usando configuração padrão.",
+                "warn",
+            )
+            return self.get_default_config()
         try:
-            echo(f"Carregando configuração de {file_path}...", "info")
+            echo(f"Carregando configuração de logging: '{file_path}'", "info")
             with file_path.open("r", encoding="utf-8") as file:
-                config = yaml.safe_load(file)
-            echo("Configuração carregada com sucesso.", "success")
+                config: dict[str, dict] = yaml.safe_load(file)
+
+            # Validação das chaves esperadas
+            required_keys = {"file", "console"}
+            if not required_keys.issubset(config["logger"].keys()):
+                self._raise_missing_keys(required_keys)
+
+            echo("Configuração carregada com sucesso!", "success")
             super()._separator_line()
-        except LoggerError as exc:
-            echo(f"Erro ao carregar arquivo YAML: {exc}", "error")
-            return None
+        except (yaml.YAMLError, OSError) as exc:
+            echo(f"Erro ao carregar arquivo YAML: {exc}. Usando configuração padrão.", "error")
+            return self.get_default_config()
         else:
             return config
 
@@ -88,23 +120,22 @@ class LoggerSingleton(BaseClass):
     def _assign_config(self, config: LoggerDict) -> None:
         """Atribui as configurações do dicionário às variáveis da classe."""
         try:
+            optional_keys = {"suppress", "ignore_libs"}
+            for key in optional_keys:
+                if key not in config["logger"]:
+                    config["logger"][key] = []
             self.file_enabled: bool = bool(config["logger"]["file"]["enabled"])
             self.file_level: str = str(config["logger"]["file"]["level"])
             self.file_path: PathLike = str(config["logger"]["file"]["path"])
             self.console_level: str = str(config["logger"]["console"]["level"])
-            self.suppress_list: list[str] = [
-                str(item) for item in config["logger"].get("suppress", [])
-            ]
-            self.ignore_libs: list[str] = [
-                str(lib) for lib in config["logger"].get("ignore_libs", [])
-            ]
+            self.suppress_list: list[str] = [str(item) for item in config["logger"]["suppress"]]
+            self.ignore_libs: list[str] = [str(lib) for lib in config["logger"]["ignore_libs"]]
         except KeyError as exc:
             echo(f"Erro ao atribuir as chaves do dicionário de configurações: {exc}", "error")
             raise
 
     def _suppress_warnings(self) -> None:
         """Suprime warnings específicos e mensagens de bibliotecas configuradas."""
-        # Suprime mensagens específicas
         try:
             if self.suppress_list:
                 for warning_message in self.suppress_list:
@@ -114,7 +145,6 @@ class LoggerSingleton(BaseClass):
             echo(msg, "error")
             raise
 
-        # Ignora mensagens de bibliotecas específicas
         try:
             if hasattr(self, "ignore_libs") and self.ignore_libs:
                 for lib in self.ignore_libs:
@@ -177,52 +207,14 @@ class LoggerSingleton(BaseClass):
             }
         )
 
-    def info(self, message: str) -> None:
-        """Loga uma mensagem de nível INFO."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.info(
-            message, stacklevel=2
-        )  # Usa stacklevel=2 para capturar o chamador correto
-
-    def warning(self, message: str) -> None:
-        """Loga uma mensagem de nível WARNING."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.warning(message, stacklevel=2)
-
-    def error(self, message: str) -> None:
-        """Loga uma mensagem de nível ERROR."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.error(message, stacklevel=2)
-
-    def debug(self, message: str) -> None:
-        """Loga uma mensagem de nível DEBUG."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.debug(message, stacklevel=2)
-
-    def exception(self, message: str) -> None:
-        """Loga uma mensagem de nível EXCEPTION."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.exception(message, stacklevel=2)
-
-    def critical(self, message: str) -> None:
-        """Loga uma mensagem de nível CRITICAL."""
-        if not self._initialized:
-            self._ensure_initialized()
-        self._logger.critical(message, stacklevel=2)
-
     @classmethod
     def get_logger(cls) -> logging.Logger:
-        """Instancia o logger, inicializando-a  com a configuração padrão se necessário."""
+        """Instancia o logger, inicializando-o  com a configuração padrão se necessário."""
         try:
-            if cls._instance is None or cls._instance.logger is None:
+            if not (cls._instance and cls._instance.logger):
                 instance = cls()
                 if instance.logger is None:
-                    raise RuntimeError
+                    raise RuntimeError("Logger não pôde ser inicializado.")
                 return instance.logger
         except LoggerError as exc:
             echo(f"Erro um erro ao instanciar o logger: {exc}", "error")

@@ -1,10 +1,6 @@
 """Módulo de definição de tipos personalizados."""
-# ruff: noqa: PLR0913, PLR0903
-# pylint: disable=too-many-arguments, too-many-positional-arguments
 
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 type PathLike = str | Path
 """Tipo que representa um caminho, podendo ser uma string ou um objeto Path."""

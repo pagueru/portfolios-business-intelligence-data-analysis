@@ -19,6 +19,9 @@ dependencies = [
     "chardet>=5.2.0",
     "ipykernel>=6.29.5",
     "tabulate>=0.9.0",
+    "pydantic>=2.11.5",
+    "python-dotenv>=1.1.0",
+    "duckdb>=1.3.0",
 ]
 
 [project.optional-dependencies]
@@ -29,7 +32,7 @@ dev = [
     "pytest-cov>=6.0.0",
     "mypy>=1.15.0",
     "black>=25.1.0",
-]
+]   
 
 [tool.pylint]
 extension-pkg-allow-list = ["pyodbc", "numpy", "pandas"]
@@ -49,6 +52,8 @@ disable = [
 [tool.ruff]
 lint.select = ["ALL"]    # Ativar todas as regras de linting, análise e estilo
 lint.unfixable = []      # Permitir todas as correções
+lint.isort.force-sort-within-sections = true # Forçar a ordenação dentro de seções
+lint.isort.combine-as-imports = true         # Permitir importações combinadas
 lint.ignore = [
     "D203",              # Conflito com D211 (linha em branco antes da classe)
     "D212",              # Conflito com D213 (resumo na primeira linha)
@@ -80,11 +85,10 @@ lint.ignore = [
     "FIX003",            # Permite `FIXME` sem link para issue
     "FIX002",            # Permite `FIXME` sem ser tratado como erro crítico
     "EM101",             # Permite o uso de string literal diretamente em exceções
-]
 
-# Ordenação automática de imports (substitui o isort)
-lint.isort.force-sort-within-sections = true # Forçar a ordenação dentro de seções
-lint.isort.combine-as-imports = true         # Permitir importações combinadas
+    # Remoções pontuais
+    "S608"
+]
 fix = true               # Ativar correções automáticas
 line-length = 100        # Definir o comprimento da linha para 100 caracteres
 target-version = "py313" # Compatível com Python 3.13
@@ -92,6 +96,9 @@ exclude = [
     ".venv",
     "__pycache__",
 ]
+
+# Ordenação automática de imports (substitui o isort)
+
 
 [tool.ruff.format]
 quote-style = "double"            # Usar aspas duplas (Black)
@@ -119,6 +126,10 @@ pythonpath = [".","src"]         # Adiciona o diretório atual ao PYTHONPATH
 [project.urls]
 repository = "https://github.com/pagueru/portfolios-business-intelligence-data-analysis"
 
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+[tool.hatch.build.targets.wheel]
+packages = [".","src"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+]

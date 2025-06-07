@@ -4,6 +4,10 @@ from dataclasses import dataclass
 import inspect
 from pathlib import Path
 import shutil
+from typing import Any
+
+from bs4 import BeautifulSoup
+import yaml
 
 from src.common.echo import echo
 from src.config.constypes import PathLike
@@ -21,7 +25,7 @@ class BaseClass:
             if current_frame is not None:
                 method_name = current_frame.f_code.co_name
                 return f"{self.__class__.__name__}.{method_name}"
-        except Exception:
+        except ProjectError:
             echo("Falha ao obter o nome do método atual.", "error")
             raise
         else:
@@ -35,8 +39,8 @@ class BaseClass:
         """Imprime uma linha ajustada ao tamanho do terminal ou ao valor fornecido pelo usuário."""
         try:
             width = padding if padding > 0 else shutil.get_terminal_size((80, 20)).columns
-            echo((char * width), "blank")
-        except Exception as exc:
+            print(char * width)
+        except ProjectError as exc:
             echo(f"Falha ao obter o tamanho do terminal: {exc}", "warn")
             raise
 
@@ -50,8 +54,32 @@ class BaseClass:
         if not path.parent.exists():
             try:
                 path.parent.mkdir(parents=True, exist_ok=True)
-            except Exception as exc:
-                msg = f"Erro ao criar diretório: {exc}"
-                echo(msg, "error")
-                raise ProjectError(msg) from exc
+            except ProjectError as exc:
+                echo(f"Erro ao criar diretório: {exc}", "error")
+                raise
         return path
+
+    def _load_yaml(self, file_path: PathLike, key: str | None = None) -> dict[str, Any]:
+        """Carrega um dicionário a partir de um arquivo YAML."""
+        try:
+            file_path = Path(file_path)
+            with file_path.open("r", encoding="utf-8") as file:
+                settings: dict[str, Any] = yaml.safe_load(file)
+                return settings[key] if key else settings
+        except FileNotFoundError as exc:
+            echo(f"Arquivo de configurações não encontrado: {exc}", "error")
+            raise
+        except ProjectError as exc:
+            echo(f"Erro ao carregar o arquivo YAML: {exc}", "error")
+            raise
+
+    def _load_html(self, file_path: PathLike) -> BeautifulSoup:
+        """Carrega e parseia o HTML usando BeautifulSoup."""
+        try:
+            file_path = Path(file_path)
+            file_path = file_path.read_text(encoding="utf-8")
+        except ProjectError:
+            echo(f"Erro ao ler o arquivo HTML: {file_path}", "error")
+            raise
+        else:
+            return BeautifulSoup(file_path, "lxml")

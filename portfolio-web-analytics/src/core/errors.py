@@ -5,21 +5,21 @@ class ProjectError(Exception):
     """Exceção base para erros do projeto."""
 
 
-class HTMLParserError(Exception):
+class HTMLParserError(ProjectError):
     """Exceção para erros de parsing da classe GoodreadsHTMLParser."""
 
 
-class HTMLDownloaderError(Exception):
+class HTMLDownloaderError(ProjectError):
     """Exceção genérica para erros relacionados à classe HTMLDownloader."""
 
 
-class KaggleDatasetError(Exception):
+class KaggleDatasetError(ProjectError):
     """Exceção para erros relacionados ao download ou análise de datasets do Kaggle."""
 
 
-class ProjectUtilsError(Exception):
-    """Exceção para erros relacionados à classe ProjectUtils."""
-
-
-class LoggerError(Exception):
+class LoggerError(ProjectError):
     """Exceção para erros relacionados à configuração do logger."""
+
+
+class ConfigRepositoryError(ProjectError):
+    """Exceção para erros relacionados à classe ConfigRepository."""
