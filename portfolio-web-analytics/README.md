@@ -1,4 +1,4 @@
-# Pipeline de Web Analytics — Projeto Acadêmico e Profissional
+# Portfolio — Web Analytics
 
 Automatização do processo de coleta e transformação de dados de mangás, integrando scraping do Goodreads, parsing HTML parametrizado via YAML e datasets do Kaggle, com foco em web analytics e arquitetura limpa.
 
@@ -18,7 +18,7 @@ Automatização do processo de coleta e transformação de dados de mangás, int
 
 Este projeto tem como objetivo aprofundar conhecimentos em Python, web scraping e arquitetura limpa, por meio do desenvolvimento de um pipeline para coleta de dados de livros. A aplicação integra scraping do Goodreads, parsing HTML parametrizado via YAML e uso de datasets do Kaggle, permitindo a extração, normalização e consolidação de informações. O pipeline foi inicialmente testado com o mangá [Oyasumi Punpun](https://www.goodreads.com/book/show/25986929-goodnight-punpun-omnibus-vol-1), mas pode ser adaptado para outras obras com ajustes no `settings.yaml`.
 
-Esta solução evolui conhecimentos de projetos anteriores, como o [py-selenium-scraper](https://github.com/pagueru/py-selenium-scraper), e adota princípios de Clean Architecture para promover organização, manutenibilidade e aprendizado contínuo.
+Esta solução evolui conhecimentos de projetos anteriores, como o [py-selenium-scraper](https://github.com/pagueru/py-selenium-scraper), e adota alguns princípios de Clean Architecture para promover organização, manutenibilidade e aprendizado contínuo.
 
 > [!IMPORTANT]  
 > **Atenção ética:** Este projeto é destinado a fins acadêmicos e demonstração técnica. Ao utilizar técnicas de scraping, é fundamental respeitar os termos de uso das plataformas, a legislação vigente (LGPD, GDPR etc.) e os princípios éticos de privacidade e consentimento.
@@ -79,14 +79,77 @@ uv run ./examples/kaggle_dataset_provider_example.py
    - Realiza a busca do livro/mangá no site Goodreads, utilizando os parâmetros definidos em `settings.yaml`.
    - Faz o download do HTML da página do livro e salva em disco, utilizando cache para evitar downloads desnecessários.
 
+    <details>
+      <summary><code>Exemplo de execução isolada </code></summary>
+
+    ```python
+    # Adicionando a classe de configuração do projeto
+    config_repository = SettingsManager()
+
+    # Instanciando a classe
+    repository = GoodreadsScraper(config_repository.goodreads_settings)
+
+    # Chamando o método principal
+    html_path = repository.execute_download()
+    ```
+
+    </details>
+
 3. **Parsing do HTML** (`GoodreadsParser`)
    - Utiliza o HTML baixado e o arquivo `parser.yaml` para extrair informações estruturadas (título, autor, páginas, avaliações, etc.).
    - Normaliza e formata os dados extraídos para uso posterior.
+
+    <details>
+      <summary><code>Exemplo de execução isolada </code></summary>
+
+    ```python
+    # Inicializa o ParserRepository
+    parser = GoodreadsParser()
+
+    # Extrai dados com base no arquivo YAML
+    extracted_data = parser.extract_from_yaml(PARSER_FILE)
+
+    # Formata os dados extraídos para remover espaços e quebras de linha
+    extracted_data = parser.format_extracted_data(extracted_data)
+
+    # Exibe os dados extraídos e formatados
+    print(json.dumps(extracted_data, indent=4, ensure_ascii=False))
+    ```
+
+    </details>
 
 4. **Download e filtragem do dataset Kaggle** (`KaggleDatasetProvider`)
    - Baixa o dataset de mangás do Kaggle, conforme especificado em `settings.yaml`.
    - Filtra o dataset para obter apenas os dados do mangá de interesse.
    - Converte os dados filtrados para JSON.
+
+    <details>
+      <summary><code>Exemplo de execução isolada </code></summary>
+
+    ```python
+    # Instancia a classe de configuração do projeto
+    config_repository = SettingsManager()
+    
+    # Instancia a classe KaggleRepository
+    kaggle_repository = KaggleDatasetProvider(config_repository.kaggle_settings)
+    
+    # Faz o download do dataset do Kaggle
+    kaggle_repository.download_dataset()
+    
+    # Carrega o arquivo CSV em um DataFrame
+    manga_dataset = kaggle_repository.load_dataframe("manga.csv")
+    
+    # Filtra o DataFrame pelo nome do mangá "PunPun"
+    manga_dataset = kaggle_repository.filter_by_manga_name(manga_dataset)
+    
+    # Converte o DataFrame filtrado para JSON
+    manga_json = kaggle_repository.dataframe_to_json(manga_dataset)
+    
+    # Exibe o JSON formatado no console
+    print(json.dumps(manga_json, indent=2, ensure_ascii=False))
+    ```
+
+    </details>
 
 5. **Normalização e união dos dados** (`WebAnalyticsPipeline`)
    - Realiza a normalização final dos dados extraídos do Goodreads e Kaggle.
