@@ -1,7 +1,8 @@
 """Módulo base para todas as classes do projeto."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import inspect
+from logging import Logger
 from pathlib import Path
 import shutil
 from typing import Any
@@ -10,13 +11,16 @@ from bs4 import BeautifulSoup
 import yaml
 
 from src.common.echo import echo
+from src.common.errors.errors import ProjectError
 from src.config.constypes import PathLike
-from src.core.errors import ProjectError
 
 
 @dataclass
 class BaseClass:
     """Classe base para fornecer métodos comuns a todas as classes."""
+
+    logger: Logger = field(init=False)
+    """Logger singleton para registrar eventos e erros."""
 
     def _get_current_method_name(self) -> str:
         """Retorna dinamicamente o nome da classe e do método atual."""
@@ -40,8 +44,8 @@ class BaseClass:
         try:
             width = padding if padding > 0 else shutil.get_terminal_size((80, 20)).columns
             print(char * width)
-        except ProjectError as exc:
-            echo(f"Falha ao obter o tamanho do terminal: {exc}", "warn")
+        except ProjectError as e:
+            echo(f"Falha ao obter o tamanho do terminal: {e}", "warn")
             raise
 
     def _ensure_path(self, path_str: PathLike) -> Path:
@@ -54,8 +58,8 @@ class BaseClass:
         if not path.parent.exists():
             try:
                 path.parent.mkdir(parents=True, exist_ok=True)
-            except ProjectError as exc:
-                echo(f"Erro ao criar diretório: {exc}", "error")
+            except ProjectError as e:
+                echo(f"Erro ao criar diretório: {e}", "error")
                 raise
         return path
 
@@ -66,11 +70,11 @@ class BaseClass:
             with file_path.open("r", encoding="utf-8") as file:
                 settings: dict[str, Any] = yaml.safe_load(file)
                 return settings[key] if key else settings
-        except FileNotFoundError as exc:
-            echo(f"Arquivo de configurações não encontrado: {exc}", "error")
+        except FileNotFoundError as e:
+            echo(f"Arquivo de configurações não encontrado: {e}", "error")
             raise
-        except ProjectError as exc:
-            echo(f"Erro ao carregar o arquivo YAML: {exc}", "error")
+        except ProjectError as e:
+            echo(f"Erro ao carregar o arquivo YAML: {e}", "error")
             raise
 
     def _load_html(self, file_path: PathLike) -> BeautifulSoup:
@@ -83,3 +87,7 @@ class BaseClass:
             raise
         else:
             return BeautifulSoup(file_path, "lxml")
+
+    def _inicialize_class(self) -> str:
+        """Inicializa a classe base, garantindo que o nome da classe seja definido."""
+        return f"Inicializando a classe: '{self.__class__.__name__}'"

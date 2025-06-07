@@ -207,18 +207,18 @@ Aqui está uma versão revisada, clara, sucinta e estruturada do seu texto sobre
   # Exemplo indesejado — com `logger`
   try:
       connect_to_db()
-  except ConnectionError as exc:
-      logger.error(f"Erro de conexão: {exc}")
+  except ConnectionError as e:
+      logger.error(f"Erro de conexão: {e}")
   ```
 
-* Caso identifique que padrão no script seja o uso de `echo`, capture a exceção como `exc` e use interpolação para exibir mensagem detalhada.
+* Caso identifique que padrão no script seja o uso de `echo`, capture a exceção como `e` e use interpolação para exibir mensagem detalhada.
 
   ```python
   # Exemplo desejado — com `echo`
   try:
       process_data()
-  except ValueError as exc:
-      echo(f"Erro ao processar os dados: {exc}", "error")
+  except ValueError as e:
+      echo(f"Erro ao processar os dados: {e}", "error")
       raise
 
   # Exemplo indesejado — com `echo`

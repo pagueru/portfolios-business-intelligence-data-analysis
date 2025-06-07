@@ -1,34 +1,31 @@
-"""Módulo de repositório de utilitários de configurações do projeto."""
+"""Módulo responsável pelo carregamento e validação de configurações do projeto."""
 
 import json
-import os
 from pathlib import Path
 import time
-from typing import TYPE_CHECKING, Any
+from typing import Any
 import winsound
 
 import yaml
 
+from src.common.base.base_class import BaseClass
 from src.common.echo import echo
-from src.config.constypes import ParserDict, PathLike
-from src.core.base_class import BaseClass
-from src.core.errors import ConfigRepositoryError, ProjectError
+from src.common.errors.errors import SettingsManagerError
+from src.config.constants import SETTINGS_FILE
+from src.config.constypes import PathLike
 
 
-class ConfigRepository(BaseClass):
+class SettingsManager(BaseClass):
     """Classe de repositório de utilitários de configurações."""
 
     def __init__(self, settings: Path | None = None) -> None:
         self.timer = time.time()
         """Armazena o tempo de início do script para cálculo de tempo de execução."""
 
-        self.class_name: str = self.__class__.__name__
-        """Nome da classe atual para uso em logs e mensagens de erro: `ConfigRepository`"""
+        # Registra a inicialização da classe
+        # echo(super()._inicialize_class(), "info")
 
-        self.settings_path: Path = settings if settings else Path("./src/config/settings.yaml")
-        """Caminho do arquivo de configurações: `./src/config/settings.yaml`"""
-
-        self.settings: dict[str, Any] = self._load_yaml(file_path=self.settings_path)
+        self.settings: dict[str, Any] = self._load_yaml(settings if settings else SETTINGS_FILE)
         """Carrega o arquivo de configurações YAML: `./src/config/settings.yaml`"""
 
         self.goodreads_settings = self.settings["goodreads"]
@@ -51,7 +48,7 @@ class ConfigRepository(BaseClass):
                 print("\033[H\033[J", end="", flush=True)
             self.separator_line()
             echo("Iniciando o script.", "info")
-        except ConfigRepositoryError:
+        except SettingsManagerError:
             echo("Erro inesperado ao limpar o terminal.", "error")
             raise
 
@@ -63,7 +60,7 @@ class ConfigRepository(BaseClass):
             if beep:
                 # winsound.Beep(400, 10)
                 winsound.MessageBeep()
-        except ConfigRepositoryError:
+        except SettingsManagerError:
             echo("Erro inesperado ao calcular o tempo de execução.", "error")
             raise
 
@@ -83,7 +80,7 @@ class ConfigRepository(BaseClass):
         except yaml.YAMLError:
             echo("Erro ao processar o YAML.", "error")
             raise
-        except ConfigRepositoryError:
+        except SettingsManagerError:
             echo("Erro inesperado ao carregar as configurações.", "error")
             raise
 
@@ -95,7 +92,7 @@ class ConfigRepository(BaseClass):
                 return
             if data is not None:
                 print(json.dumps(data, indent=4, ensure_ascii=False))
-        except ConfigRepositoryError:
+        except SettingsManagerError:
             echo("Erro inesperado ao imprimir o dicionário.", "error")
             raise
 
@@ -114,4 +111,4 @@ class ConfigRepository(BaseClass):
                     f"{', '.join(missing_keys)}.",
                     "error",
                 )
-                raise ProjectError
+                raise SettingsManagerError

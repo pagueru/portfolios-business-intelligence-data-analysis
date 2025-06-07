@@ -55,7 +55,7 @@ rating:
   attrs:
     class: RatingStatistics__rating
 
-# Estatísticas do autor (número de livros e seguidores) - obtém o texto dentro do container do perfil
+# Estatísticas do autor - obtém o texto dentro do container do perfil
 # Exemplo: "107 books 2,549 followers"
 autor_stats:
   parent:
@@ -67,7 +67,7 @@ autor_stats:
     class: Text Text__body3 Text__subdued
 
 # Biografia do autor - busca por texto formatado após um divisor específico
-# Exemplo: null (no HTML fornecido, a biografia está vazia)
+# Exemplo: "Inio Asano is a Japanese manga artist known for his unique storytelling and art style."
 author_bio:
   parent:
     name: div
@@ -78,7 +78,7 @@ author_bio:
     class: Formatted
 
 # Descrição/sinopse do livro - obtém o texto formatado dentro da seção de descrição
-# Exemplo: "Meet Punpun Punyama. He's an average kid in an average town. He wants to win a Nobel Prize and save the world. He wants to go far away with his true love. He wants to find some porn. But Punpun's life is about to unravel…"
+# Exemplo: "Meet Punpun Punyama. He's an average kid in an average town."
 description:
   parent:
     name: div

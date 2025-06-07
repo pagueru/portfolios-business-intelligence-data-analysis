@@ -1,29 +1,29 @@
 """Lógica de scraping específica para buscas e detalhes de livros no Goodreads."""
 
-import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from bs4 import BeautifulSoup, Tag
-import yaml
+from bs4 import BeautifulSoup
 
-from src.common.logger import LoggerSingleton
-from src.core.base_class import BaseClass
-from src.core.errors import HTMLParserError
+from src.common.base.base_class import BaseClass
+from src.common.errors.errors import GoodreadsHTMLParserError
+from src.infrastructure.logger import LoggerSingleton
 
 if TYPE_CHECKING:
     from logging import Logger
 
-    from src.config.constypes import ParserDict
 
-
-class ParserRepository(BaseClass):
-    """Realize o parsing de arquivos HTML do Goodreads e extraia elementos conforme solicitado."""
+class GoodreadsParser(BaseClass):
+    """Realiza o parsing de arquivos HTML do Goodreads e extrai elementos."""
 
     def __init__(self, html_path: Path | None = None) -> None:
         self.logger: Logger = LoggerSingleton.logger or LoggerSingleton.get_logger()
         """Logger singleton para registrar eventos e erros."""
 
+        # Registra a inicialização da classe
+        self.logger.info(super()._inicialize_class())
+
+        # TODO: Passar o caminho do HTML após a execução do GoodreadsScraper
         self.html_path = (
             html_path if html_path else "./data/html/25986929-goodnight-punpun-omnibus-vol-1.html"
         )
@@ -36,6 +36,7 @@ class ParserRepository(BaseClass):
         """Garante que o BeautifulSoup foi inicializado com o HTML correto."""
         if self.soup is None:
             self.soup = super()._load_html(self.html_path)
+            self.logger.info(f"HTML carregado de: '{self.html_path}'")
 
     def _log_and_raise_exception(
         self, error_message: str, exception_class: type[Exception]
@@ -60,10 +61,12 @@ class ParserRepository(BaseClass):
                 if search_scope:
                     result[field] = self._extract_field_data(search_scope, field, find_args)
 
-        except HTMLParserError:
-            self._log_and_raise_exception("Erro ao extrair dados do arquivo YAML.", HTMLParserError)
+        except GoodreadsHTMLParserError:
+            self._log_and_raise_exception(
+                "Erro ao extrair dados do arquivo YAML.", GoodreadsHTMLParserError
+            )
         else:
-            self.logger.debug("Dados extraídos com sucesso do arquivo YAML.")
+            self.logger.info("Dados extraídos com sucesso do arquivo YAML.")
             return result
 
     def _get_search_scope(self, find_args: dict[str, Any]) -> BeautifulSoup:
@@ -85,10 +88,11 @@ class ParserRepository(BaseClass):
                 else:
                     self.logger.warning("Atributos inválidos para o escopo de busca.")
 
-        except HTMLParserError:
-            self._log_and_raise_exception("Erro ao determinar o escopo de busca.", HTMLParserError)
+        except GoodreadsHTMLParserError:
+            self._log_and_raise_exception(
+                "Erro ao determinar o escopo de busca.", GoodreadsHTMLParserError
+            )
         else:
-            self.logger.debug("Escopo de busca determinado com sucesso.")
             return search_scope
 
     def _extract_field_data(
@@ -114,7 +118,9 @@ class ParserRepository(BaseClass):
                         if span:
                             text = span.get_text(separator=" ", strip=True)
                             if text:
-                                self.logger.debug("Biografia do autor extraída com sucesso.")
+                                self.logger.info(
+                                    f"Dados extraídos com sucesso para o campo '{field}'."
+                                )
                                 return text
                     self.logger.warning("Nenhuma biografia encontrada para o autor.")
                     return None
@@ -127,16 +133,16 @@ class ParserRepository(BaseClass):
                         if index is not None and isinstance(index, int) and index < len(elements)
                         else elements[0]
                     )
-                    self.logger.debug(f"Dados extraídos com sucesso para o campo '{field}'.")
+                    self.logger.info(f"Dados extraídos com sucesso para o campo '{field}'.")
                     return selected_element.get_text(strip=True) if selected_element else None
                 self.logger.warning(f"Nenhum elemento encontrado para o campo '{field}'.")
                 return None
             self.logger.warning(f"Atributos inválidos para o campo '{field}'.")
 
-        except HTMLParserError:
+        except GoodreadsHTMLParserError:
             self._log_and_raise_exception(
                 f"Erro ao extrair dados do campo '{field}'.",
-                HTMLParserError,
+                GoodreadsHTMLParserError,
             )
 
     def format_extracted_data(self, data: dict[str, Any]) -> dict[str, Any]:

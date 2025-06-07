@@ -1,7 +1,14 @@
+from typing import TYPE_CHECKING
+
 from bs4 import BeautifulSoup, Tag
 
-from src.common.logger import LoggerSingleton
-from src.core.errors import HTMLParserError
+from common.errors.errors import ProjectError
+from infrastructure.logger import LoggerSingleton
+
+if TYPE_CHECKING:
+    from logging import Logger
+
+# TODO: Classe temporária. Os métodos eram implementados na classe `ParserRepository`.
 
 
 class CleanRepository:
@@ -9,7 +16,10 @@ class CleanRepository:
 
     def __init__(self, soup: BeautifulSoup) -> None:
         self.soup = soup
-        self.logger = LoggerSingleton.logger or LoggerSingleton.get_logger()
+        """BeautifulSoup do HTML a ser limpo."""
+
+        self.logger: Logger = LoggerSingleton.logger or LoggerSingleton.get_logger()
+        """Logger singleton para registrar eventos e erros."""
 
     def remove_svg_with_viewbox(self) -> None:
         """Remove tags `<svg>` com atributo `viewBox` (case-insensitive) do HTML carregado."""
@@ -19,7 +29,7 @@ class CleanRepository:
                 if isinstance(svg, Tag) and svg.has_attr("viewbox"):
                     svg.decompose()
                     removed += 1
-        except HTMLParserError:
+        except ProjectError:
             self.logger.exception("Erro ao remover tags '<svg>'.")
             raise
         else:
@@ -48,7 +58,7 @@ class CleanRepository:
                 self.logger.debug(
                     "Div 'BookPage__mainContent' não encontrada. Nenhuma alteração realizada."
                 )
-        except HTMLParserError:
+        except ProjectError:
             self.logger.exception("Erro ao manter apenas o conteúdo principal.")
             raise
         else:

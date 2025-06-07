@@ -30,7 +30,6 @@ dev = [
     "pytest>=8.3.4",
     "pre-commit>=4.0.1",
     "pytest-cov>=6.0.0",
-    "mypy>=1.15.0",
     "black>=25.1.0",
 ]   
 
@@ -68,6 +67,7 @@ lint.ignore = [
     "ANN401",            # Permite o uso de `Any` em um `return`
     "S105",              # Permite o uso de hardcoded password
     "TRY003",            # Permite o uso de mensagens longas fora da classe de exceção
+    "RUF001",            # Permite o uso de caracteres unicode ambiguos ("–" e "-")
 
     # REMOVER NO FINAL DO PROJETO
     "D100",              # docstring
@@ -75,7 +75,7 @@ lint.ignore = [
     "D102",              # docstring
     "D107",              # docstring
     "D103",              # docstring
-    "F401",              # Ignora a remoção de importações não utilizadas
+    "D105",              
 
     # Permissões para `TODO` e `FIXME` 
     "TD001",             # Permite `TODO` sem descrição detalhada
@@ -97,9 +97,6 @@ exclude = [
     "__pycache__",
 ]
 
-# Ordenação automática de imports (substitui o isort)
-
-
 [tool.ruff.format]
 quote-style = "double"            # Usar aspas duplas (Black)
 indent-style = "space"            # Indentação com espaços (Black)
@@ -113,12 +110,6 @@ convention = "google"             # Exigir docstrings ("numpy" ou "pep257")
 mypy-init-return = true           # Exigir anotações de tipo em __init__ e __new__
 suppress-none-returning = false   # Não suprimir erros de retorno None
 allow-star-arg-any = false        # Não permitir *args e **kwargs sem anotações de tipo
-
-[tool.mypy]
-strict = true                     # Ativa as verificações estritas
-ignore_missing_imports = true     # Ignora erros de importação ausente
-disable_error_code = ["import-untyped", "return", "no-any-return", "dict-item"]
-exclude = ".venv"
 
 [tool.pytest.ini_options]
 pythonpath = [".","src"]         # Adiciona o diretório atual ao PYTHONPATH

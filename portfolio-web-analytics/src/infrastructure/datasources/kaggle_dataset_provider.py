@@ -1,4 +1,4 @@
-"""Implementação do downloader de datasets do Kaggle."""
+"""Módulo responsável pelo download e carregamento de datasets do Kaggle."""
 
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -7,20 +7,24 @@ import duckdb
 import kagglehub
 import pandas as pd
 
-from src.common.logger import LoggerSingleton
-from src.core.base_class import BaseClass
-from src.core.errors import KaggleDatasetError
+from src.common.base.base_class import BaseClass
+from src.common.errors.errors import KaggleDatasetProviderError
+from src.config.constants import DATASETS_DIR
+from src.infrastructure.logger import LoggerSingleton
 
 if TYPE_CHECKING:
     from logging import Logger
 
 
-class KaggleRepository(BaseClass):
+class KaggleDatasetProvider(BaseClass):
     """Baixa datasets do Kaggle usando kagglehub."""
 
     def __init__(self, dataset_config: dict[str, Any]) -> None:
         self.logger: Logger = LoggerSingleton().logger or LoggerSingleton.get_logger()
         """Logger singleton para registrar eventos e erros."""
+
+        # Registra a inicialização da classe
+        self.logger.info(super()._inicialize_class())
 
         self.manga_name: str = dataset_config["manga_name"]
         """Nome do manga a ser baixado. Ex.: `PunPun`"""
@@ -31,7 +35,7 @@ class KaggleRepository(BaseClass):
         self.force_download: bool = dataset_config["force_download"]
         """Flag para forçar o download do dataset mesmo se já estiver em cache: `False`"""
 
-        self.datasets_path: Path = Path("./data/datasets")
+        self.datasets_path: Path = DATASETS_DIR
         """Caminho base onde os datasets serão armazenados localmente: `./data/datasets/`"""
 
         self.datasets_file: list[str] = dataset_config["dataset_files"]
@@ -69,7 +73,7 @@ class KaggleRepository(BaseClass):
                     self.logger.info(f"Arquivo '{file.name}' copiado para o cache local.")
                 else:
                     self.logger.info(f"Arquivo '{file.name}' ignorado.")
-        except KaggleDatasetError:
+        except KaggleDatasetProviderError:
             self.logger.exception("Erro inesperado ao baixar dataset")
             raise
         return self.datasets_path
@@ -84,10 +88,10 @@ class KaggleRepository(BaseClass):
         try:
             dataframe = pd.read_csv(file_path)
             self.logger.info(f"Arquivo '{file_name}' carregado com sucesso.")
-        except Exception as exc:
+        except Exception as e:
             msg = f"Erro ao carregar o arquivo '{file_name}'."
             self.logger.exception(msg)
-            raise KaggleDatasetError(msg) from exc
+            raise KaggleDatasetProviderError(msg) from e
         else:
             return dataframe
 
@@ -96,10 +100,10 @@ class KaggleRepository(BaseClass):
         try:
             json_data = dataframe.to_dict(orient="records")
             return json_data[0] if len(json_data) == 1 else json_data
-        except Exception as exc:
+        except Exception as e:
             msg = "Erro ao converter DataFrame para JSON."
             self.logger.exception(msg)
-            raise KaggleDatasetError(msg) from exc
+            raise KaggleDatasetProviderError(msg) from e
 
     def filter_by_manga_name(
         self, dataframe: pd.DataFrame, column: str | None = None, manga_name: str | None = None
@@ -110,14 +114,14 @@ class KaggleRepository(BaseClass):
             filtered_df = dataframe[
                 dataframe[column or "Title"].str.contains(manga_name, case=False, na=False)
             ]
-        except KeyError as exc:
+        except KeyError as e:
             msg = f"A coluna '{column}' não foi encontrada no DataFrame."
             self.logger.exception(msg)
-            raise KaggleDatasetError(msg) from exc
-        except Exception as exc:
+            raise KaggleDatasetProviderError(msg) from e
+        except Exception as e:
             msg = f"Erro ao filtrar o DataFrame pelo manga: '{manga_name}'."
             self.logger.exception(msg)
-            raise KaggleDatasetError(msg) from exc
+            raise KaggleDatasetProviderError(msg) from e
         else:
             self.logger.info(f"Filtragem concluída para o manga: '{manga_name}'.")
             return filtered_df
@@ -141,13 +145,13 @@ class KaggleRepository(BaseClass):
                 query, (str(file_path), f"%{self.manga_name.lower()}%")
             )
             filtered_data = result.to_df().to_dict(orient="records")
-        except Exception as exc:
+        except Exception as e:
             msg = (
                 f"Erro ao filtrar o arquivo '{file_name}' pelo manga: '{self.manga_name}' "
                 "usando DuckDB."
             )
             self.logger.exception(msg)
-            raise KaggleDatasetError(msg) from exc
+            raise KaggleDatasetProviderError(msg) from e
         else:
             self.logger.info(
                 f"Filtragem concluída para o manga: '{self.manga_name}' usando DuckDB."

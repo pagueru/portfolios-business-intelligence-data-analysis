@@ -1,1 +1,1 @@
-"""Módulo common."""
+"""Módulo contendo funcionalidades comuns do projeto."""

@@ -1,18 +1,17 @@
-"""Módulo de Logger."""
+"""Módulo de configuração e acesso ao logger singleton da aplicação."""
 
 import json
 import logging
-from pathlib import Path
 from typing import Any, ClassVar, Optional
 import warnings
 
 import yaml
 
+from src.common.base.base_class import BaseClass
 from src.common.echo import echo
+from src.common.errors.errors import LoggerError
 from src.config.constants import SETTINGS_FILE
 from src.config.constypes import LoggerDict, PathLike
-from src.core.base_class import BaseClass
-from src.core.errors import LoggerError
 
 
 class LoggerSingleton(BaseClass):
@@ -96,8 +95,8 @@ class LoggerSingleton(BaseClass):
 
             echo("Configuração carregada com sucesso!", "success")
             super()._separator_line()
-        except (yaml.YAMLError, OSError) as exc:
-            echo(f"Erro ao carregar arquivo YAML: {exc}. Usando configuração padrão.", "error")
+        except (yaml.YAMLError, OSError) as e:
+            echo(f"Erro ao carregar arquivo YAML: {e}. Usando configuração padrão.", "error")
             return self.get_default_config()
         else:
             return config
@@ -130,8 +129,8 @@ class LoggerSingleton(BaseClass):
             self.console_level: str = str(config["logger"]["console"]["level"])
             self.suppress_list: list[str] = [str(item) for item in config["logger"]["suppress"]]
             self.ignore_libs: list[str] = [str(lib) for lib in config["logger"]["ignore_libs"]]
-        except KeyError as exc:
-            echo(f"Erro ao atribuir as chaves do dicionário de configurações: {exc}", "error")
+        except KeyError as e:
+            echo(f"Erro ao atribuir as chaves do dicionário de configurações: {e}", "error")
             raise
 
     def _suppress_warnings(self) -> None:
@@ -216,8 +215,8 @@ class LoggerSingleton(BaseClass):
                 if instance.logger is None:
                     raise RuntimeError("Logger não pôde ser inicializado.")
                 return instance.logger
-        except LoggerError as exc:
-            echo(f"Erro um erro ao instanciar o logger: {exc}", "error")
+        except LoggerError as e:
+            echo(f"Erro um erro ao instanciar o logger: {e}", "error")
             raise
         else:
             return cls._instance.logger

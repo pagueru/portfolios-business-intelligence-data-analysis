@@ -1,49 +1,53 @@
 # Pipeline de Web Analytics — Projeto Acadêmico e Profissional
 
-Este projeto implementa um pipeline automatizado de web analytics para extração, transformação e análise de dados de mangás, integrando scraping do Goodreads, parsing HTML parametrizado por YAML e análise de datasets do Kaggle.
+Automatização do processo de coleta e transformação de dados de mangás, integrando scraping do Goodreads, parsing HTML parametrizado via YAML e datasets do Kaggle, com foco em web analytics e arquitetura limpa.
 
-O pipeline na estrutura atual foi testado apenas com o mangá Oyasumi Punpun, ainda sendo necessário aplicar mudanças conforme mencionado no [Melhorias e Tarefas Futuras](#melhorias-e-tarefas-futuras). Outras obras podem exigir ajustes no parser ou configurações.
+<p align="center">
+  <img alt="Overview" src="images/uv_run_main.py.gif" width="90%" />
+</p>
 
-Este projeto evolui iniciativas anteriores de webscraping, como o [py-selenium-scraper](https://github.com/pagueru/py-selenium-scraper), adotando princípios de Clean Architecture para aprendizado.
+[![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)](https://www.python.org/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Anhanguera](https://img.shields.io/badge/Anhanguera-FF6F00?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAB10lEQVR4nI1RvWtTcRQ99/7ee/lotUlAFKqDWAURFxEdtJugs/QPEMGlDqKDXdwVcdK/Qaibg5MgiIiIZrKiGJrEGLXW5tPG8PLe797rIqWhrXjWc849nHOBHeBb9cvWrp3fid8WVq8XpPO56Xu1F+VyOfxvo+82rpu1zYZNSzrVs9tpaEvaenWveHlJYW6JBc/h0xWUOo+JTqabdbzl1NDNIInus9gHJZuXKPMI3eKFf3czI9+pzsvgS9PSH2bxdzNrmbQrZatUMpu1wZizW7vqipMPoAT5NVBnaCBO3kGwjN2uAGB1S0drfZoWF75yUfhV1T9jcU9GQx2EufQmR9nDGsdtLs1cJCI/lphIuschvAe4febjJhUPvjH7lte+P4V8/ihHAaRfnQOwuDGOrX3cFUSFS24iuKUSL4jxawAgmh6yhgs6iFeQ+GUSPj22qlB4gwuFawBPQdztTOnQkpmFv1vN/XDaMtU7GuMhu5wmncYsAJCtvp/UbP4ugok1Ho1+iuMckZxgwzE1OgBLpzhgRhAAmSyS/no56jVmKe01zjG5Obb0jBAdcdkwAhwgKSAKGAAoYAbA/aXsCvl+/a1zwXEV7wF4M9uY2sZ+RSAjcMSkI3n6B93+8tgmpT2yAAAAAElFTkSuQmCC)](https://www.anhanguera.com/)
+[![Colaborar](https://img.shields.io/badge/Colaborar-FDFCFB?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAA0lBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIjMALTwAGygAM0AAM00AM0cALEYARF0AITEAJTUAIzIAOVUAPloAJzQAQFkAIjMAJTUAJDQAOFIAQ2AAT28AYYgAZokAX40AYYoAYY0AY4wAb6MAaZYAjL4Ahr4AhsIAfrEAibwAm9MAj9MAjMgAk9QAnucAoucAouYApOcAouUAn+IApOsApesArfIAqfIAqfIAqvIAqvIAqvIAqvMAqvIAqvIAqvIAqvIAqvIAqvIAqvIAqvIAqvIOQNevAAAARXRSTlMAAQIDBAYJCg8RExQUGR0eHyIkJCUnKC0wMTI1NzpBQ0xMUFNhcXZ2fX2KkpWZsbK0uLrMz9zl6Ors7vT19vf4+fr7/P3k6244AAAAiUlEQVQIW2XORxbCMAxFUZvQeyfU0HvvAQOxLO1/S2B7Aoc3u0cafMb+CuVrtqhWei1ASgAI3I+cDd0XXnt8JtQsPEWPp3K8fDJ0ccWHvlg2pspQ9eMX0tmr6ib8L+KcTR6w7czsM96avNqKJA+voiFdR6Xs4Eg7RxMQUUoV7DN6VKxuq4TN4p/e/gAWAfnkAFcAAAAASUVORK5CYII=)](https://www.colaboraread.com.br/login/auth)
+
+---
+
+## Sobre o Projeto
+
+Este projeto tem como objetivo aprofundar conhecimentos em Python, web scraping e arquitetura limpa, por meio do desenvolvimento de um pipeline para coleta de dados de livros. A aplicação integra scraping do Goodreads, parsing HTML parametrizado via YAML e uso de datasets do Kaggle, permitindo a extração, normalização e consolidação de informações. O pipeline foi inicialmente testado com o mangá [Oyasumi Punpun](https://www.goodreads.com/book/show/25986929-goodnight-punpun-omnibus-vol-1), mas pode ser adaptado para outras obras com ajustes no `settings.yaml`.
+
+Esta solução evolui conhecimentos de projetos anteriores, como o [py-selenium-scraper](https://github.com/pagueru/py-selenium-scraper), e adota princípios de Clean Architecture para promover organização, manutenibilidade e aprendizado contínuo.
 
 > [!IMPORTANT]  
-> **Atenção ética:** Este projeto é destinado a fins acadêmicos e demonstração técnica. Ao utilizar técnicas de scraping e análise de dados, é fundamental respeitar os termos de uso das plataformas, a legislação vigente (LGPD, GDPR etc.) e os princípios éticos de privacidade e consentimento. Sempre reflita sobre o impacto social, a finalidade e a responsabilidade no uso e compartilhamento de dados coletados.
+> **Atenção ética:** Este projeto é destinado a fins acadêmicos e demonstração técnica. Ao utilizar técnicas de scraping, é fundamental respeitar os termos de uso das plataformas, a legislação vigente (LGPD, GDPR etc.) e os princípios éticos de privacidade e consentimento.
 
-## Fluxo do Pipeline
+### Principais aprendizados
 
-O pipeline é composto por etapas bem definidas, cada uma orquestrada por uma classe principal do projeto:
+- **BeautifulSoup**: Extração direta de dados de HTML com seletores simples e baixo custo computacional.
+- **HTTPX**: Cliente HTTP assíncrono com suporte a timeout e retries.
+- **Kaggle**: Acesso automatizado a datasets via API com autenticação e download direto.
+- **Clean Architecture**: Separação de responsabilidades por camadas, promovendo organização e manutenção do código.
+- **Boas Práticas**: Adoção de tipagem forte, validações, linting com Ruff e leitura facilitada do código.
 
-1. **Leitura das configurações** (`ConfigRepository`)
-   * Carrega e valida os arquivos de configuração YAML (`settings.yaml` e `parser.yaml`).
-   * Garante que todos os parâmetros necessários estejam presentes para o funcionamento do pipeline.
+**Nota sobre escolha de biblioteca HTTP**
+A biblioteca `httpx` foi escolhida em vez de `requests` como forma de aprendizado e, após alguns testes, apresentou melhor desempenho em meus cenários. Embora seu foco principal seja em operações assíncronas, `httpx` também oferece suporte completo a chamadas síncronas.
 
-2. **Scraping do Goodreads** (`GoodreadsRepository`)
-   * Realiza a busca do livro/mangá no site Goodreads, utilizando os parâmetros definidos em `settings.yaml`.
-   * Faz o download do HTML da página do livro e salva em disco, utilizando cache para evitar downloads desnecessários.
+Veja mais em:
 
-3. **Parsing do HTML** (`ParserRepository`)
-   * Utiliza o HTML baixado e o arquivo `parser.yaml` para extrair informações estruturadas (título, autor, páginas, avaliações, etc.).
-   * Normaliza e formata os dados extraídos para uso posterior.
+- [Requests vs. HTTPX - A Detailed Comparison](https://scrapingant.com/blog/requests-vs-httpx)
+- [python-http-libraries-benchmark](https://github.com/perodriguezl/python-http-libraries-benchmark)
 
-4. **Download e filtragem do dataset Kaggle** (`KaggleRepository`)
-   * Baixa o dataset de mangás do Kaggle, conforme especificado em `settings.yaml`.
-   * Filtra o dataset para obter apenas os dados do mangá de interesse.
-   * Converte os dados filtrados para JSON.
+## Requisitos
 
-5. **Normalização e união dos dados** (`WebAnalyticsPipeline`)
-   * Realiza a normalização final dos dados extraídos do Goodreads e Kaggle.
-   * Une os dados em um único dicionário estruturado.
+- [Python](https://www.python.org/downloads/)
+- [Pyenv](https://pypi.org/project/pyenv/)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
-6. **Exportação do JSON final**
-   * Salva o resultado consolidado em `data/output/pipeline_results.json`.
+Para usar este projeto, recomenda-se o `Pyenv` para gerenciar versões do Python e o `uv` para as dependências do `pyproject.toml`. Ambos são opcionais, pois você pode usar a versão do Python do sistema e instalar dependências via `pip` com o `requirements.txt`.
 
-7. **Exibição dos resultados no terminal**
-   * Mostra no terminal, de forma formatada, os dados tratados de Goodreads e Kaggle para fácil conferência.
-
-## Instalação e Requisitos
-
-* Python 3.10+ (recomendado 3.13)
-* [uv](https://github.com/astral-sh/uv) para gerenciamento de dependências
+## Instalação
 
 Instalação recomendada (usando uv):
 
@@ -57,13 +61,43 @@ Alternativamente, você pode instalar as dependências via `requirements.txt`:
 pip install -r requirements.txt
 ```
 
-## Configuração dos Arquivos YAML
+## Fluxo do Pipeline
 
-### settings.yaml
+O pipeline é dividido em execuções das classes, cada uma responsável por uma parte específica do processo de coleta e transformação de dados. É possível executar cada parte individualmente, como visto na pasta `examples`.
+
+```bash
+uv run ./examples/goodreads_parser_example.py
+uv run ./examples/goodreads_scraper_example.py
+uv run ./examples/kaggle_dataset_provider_example.py
+```
+
+1. **Leitura das configurações** (`SettingsManager`)
+   - Carrega e valida os arquivos de configuração YAML (`settings.yaml` e `parser.yaml`).
+   - Garante que todos os parâmetros necessários estejam presentes para o funcionamento do pipeline.
+
+2. **Scraping do Goodreads** (`GoodreadsScraper`)
+   - Realiza a busca do livro/mangá no site Goodreads, utilizando os parâmetros definidos em `settings.yaml`.
+   - Faz o download do HTML da página do livro e salva em disco, utilizando cache para evitar downloads desnecessários.
+
+3. **Parsing do HTML** (`GoodreadsParser`)
+   - Utiliza o HTML baixado e o arquivo `parser.yaml` para extrair informações estruturadas (título, autor, páginas, avaliações, etc.).
+   - Normaliza e formata os dados extraídos para uso posterior.
+
+4. **Download e filtragem do dataset Kaggle** (`KaggleDatasetProvider`)
+   - Baixa o dataset de mangás do Kaggle, conforme especificado em `settings.yaml`.
+   - Filtra o dataset para obter apenas os dados do mangá de interesse.
+   - Converte os dados filtrados para JSON.
+
+5. **Normalização e união dos dados** (`WebAnalyticsPipeline`)
+   - Realiza a normalização final dos dados extraídos do Goodreads e Kaggle.
+   - Une os dados em um único dicionário estruturado.
+
+6. **Exportação do JSON final**
+   - Salva o resultado consolidado em `data/output/pipeline_results.json`.
+
+## Exemplo de Arquivo de Configuração
 
 ```yaml
-# Exemplo de configuração
-# Caminho: src/config/settings.yaml
 goodreads:
   book_url_base: "https://www.goodreads.com/book/show/"
   search_url_base: "https://www.goodreads.com/search?query="
@@ -85,9 +119,9 @@ kaggle:
 uv run main.py
 ```
 
-## Exemplo de Saída — Resultado Final
+O script `main.py` executa a classe `WebAnalyticsPipeline`, que orquestra todo o processo de scraping, parsing e exportação dos dados. O resultado final é salvo em `data/output/pipeline_results.json`.
 
-### Exemplo de JSON Final
+Abaixo o resultado esperado após a execução do pipeline:
 
 ```json
 {
@@ -127,13 +161,14 @@ uv run main.py
 
 ## Melhorias e Tarefas Futuras
 
-* [ ] Melhorar o tratamento de erros e mensagens para o usuário
-* [ ] Separar uma classe dedicada para o tratamento e normalização dos dados
-* [ ] Validar múltiplos mangás e alimentar um banco SQLite
-* [ ] Simplificar o parse do HTML (o uso do YAML é interessante, mas a manutenção do arquivo é trabalhosa)
-* [ ] Corrigir redundância de variáveis, utilizando constantes globais
-* [ ] Remover `lint.ignore` temporários do `pyproject.toml` e corrigir os erros apontados pelo linter
-* [ ] Atualizar os comandos do Makefile para facilitar a automação
+- [ ] Melhorar o tratamento de erros e mensagens para o usuário
+- [ ] Separar uma classe dedicada para o tratamento e normalização dos dados
+- [ ] Validar múltiplos mangás e alimentar um banco SQLite
+- [ ] Simplificar o parse do HTML (o uso do YAML é interessante, mas a manutenção do arquivo é trabalhosa)
+- [ ] Corrigir redundância de variáveis, utilizando as constantes globais
+- [ ] Remover `lint.ignore` temporários do `pyproject.toml` e corrigir os erros apontados pelo linter
+- [ ] Atualizar os comandos do Makefile para facilitar a automação
+- [ ] Adicionar testes unitários
 
 ## Contato
 

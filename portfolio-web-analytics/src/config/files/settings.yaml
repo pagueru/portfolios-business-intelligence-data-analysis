@@ -12,7 +12,6 @@ kaggle:
   dataset_name: "duongtruongbinh/manga-and-anime-dataset"
   dataset_files:
     - "manga.csv"
-    # - "anime.csv"
   force_download: false
 
 # Configuração do logger

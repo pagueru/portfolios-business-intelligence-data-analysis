@@ -1,22 +1,19 @@
 """Orquestrador principal: executa scraping, transformação e armazenamento."""
 
 from ast import literal_eval
-from contextlib import suppress
 import json
-import os
-from pathlib import Path
-from pprint import pprint
 import re
 from typing import TYPE_CHECKING, Any
 
+from src.common.base.base_class import BaseClass
 from src.common.echo import echo
-from src.common.logger import LoggerSingleton
-from src.core.base_class import BaseClass
-from src.core.errors import ProjectError
-from src.repositories.config_repository import ConfigRepository
-from src.repositories.goodreads_repository import GoodreadsRepository
-from src.repositories.kaggle_repository import KaggleRepository
-from src.repositories.parser_repository import ParserRepository
+from src.common.errors.errors import ProjectError
+from src.config.constants import DATASETS_DIR, HTML_DIR, OUTPUT_DIR, PARSER_FILE
+from src.config.settings_manager import SettingsManager
+from src.infrastructure.datasources.goodreads_parser import GoodreadsParser
+from src.infrastructure.datasources.goodreads_scraper import GoodreadsScraper
+from src.infrastructure.datasources.kaggle_dataset_provider import KaggleDatasetProvider
+from src.infrastructure.logger import LoggerSingleton
 
 if TYPE_CHECKING:
     from logging import Logger
@@ -27,10 +24,10 @@ class WebAnalyticsPipeline(BaseClass):
 
     def __init__(
         self,
-        config_repository: ConfigRepository,
-        goodreads_repository: GoodreadsRepository,
-        kaggle_repository: KaggleRepository,
-        parser_repository: ParserRepository,
+        config_repository: SettingsManager,
+        goodreads_repository: GoodreadsScraper,
+        kaggle_repository: KaggleDatasetProvider,
+        parser_repository: GoodreadsParser,
     ):
         self.logger: Logger = LoggerSingleton.logger or LoggerSingleton.get_logger()
         """Logger singleton para registrar eventos e erros."""
@@ -38,7 +35,7 @@ class WebAnalyticsPipeline(BaseClass):
         self.class_name = self.__class__.__name__
         """Nome da classe atual: `WebAnalyticsPipeline`"""
 
-        self.parser_yaml_path = Path("./src/config/parser.yaml")
+        self.parser_yaml_path = PARSER_FILE
         """Caminho do arquivo de configuração do parser, ex: `./src/config/parser.yaml`."""
 
         self.config_repository = config_repository
@@ -53,13 +50,13 @@ class WebAnalyticsPipeline(BaseClass):
         self.parser_repository = parser_repository
         """Repositório de parsing de HTML: `ParserRepository`"""
 
-        self.datasets_directory = Path("./data/datasets")
+        self.datasets_directory = DATASETS_DIR
         """Diretório onde os datasets serão armazenados, ex: `./data/datasets.`"""
 
-        self.html_directory = Path("./data/html")
+        self.html_directory = HTML_DIR
         """Diretório onde os arquivos HTML serão salvos, ex: `./data/html.`"""
 
-        self.output_directory = Path("./data/output")
+        self.output_directory = OUTPUT_DIR
         """Diretório onde os resultados do pipeline serão salvos, ex: `./data/output.`"""
 
         self.output_path = self.output_directory / "pipeline_results.json"
@@ -145,7 +142,7 @@ class WebAnalyticsPipeline(BaseClass):
 
             # 4. Extrair e formatar dados do HTML
             self.logger.info("Extraindo e formatando dados do HTML.")
-            parser = ParserRepository(html_path)
+            parser = GoodreadsParser(html_path)
             extracted_data = parser.run_full_extraction(self.parser_yaml_path)
             goodreads_normalized = self.parse_goodreads(extracted_data)
             self.logger.info("Dados extraídos e normalizados do Goodreads com sucesso.")

@@ -8,22 +8,24 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 import httpx
 
-from src.common.echo import echo
-from src.common.logger import LoggerSingleton
-from src.config.constants import BRT
-from src.core.base_class import BaseClass
-from src.core.errors import HTMLDownloaderError
+from src.common.base.base_class import BaseClass
+from src.common.errors.errors import GoodreadsScraperError
+from src.config.constants import BRT, HTML_DIR
+from src.infrastructure.logger import LoggerSingleton
 
 if TYPE_CHECKING:
     from logging import Logger
 
 
-class GoodreadsRepository(BaseClass):
+class GoodreadsScraper(BaseClass):
     """Baixa o HTML de uma página e salva em disco."""
 
     def __init__(self, goodreads_config: dict[str, Any]) -> None:
         self.logger: Logger = LoggerSingleton.logger or LoggerSingleton.get_logger()
         """Logger singleton para registrar eventos e erros."""
+
+        # Registra a inicialização da classe
+        self.logger.info(super()._inicialize_class())
 
         self.class_name: str = self.__class__.__name__
         """Nome da classe atual para uso em logs e mensagens de erro: `HTMLDownloader`"""
@@ -40,7 +42,7 @@ class GoodreadsRepository(BaseClass):
         self.cache_duration_seconds: int = goodreads_config["cache_seconds"]
         """Período de cache em segundos. Ex.: `600`"""
 
-        self.output_html_directory: Path = Path("./data/html/")
+        self.output_html_directory: Path = HTML_DIR
         """Diretório onde os arquivos HTML serão salvos: `./data/html/`"""
 
         self.goodreads_search_url: str = (
@@ -63,7 +65,7 @@ class GoodreadsRepository(BaseClass):
 
     def _handle_exceptions(self, error_message: str) -> None:
         """Método auxiliar para tratamento de exceções comuns."""
-        self._log_and_raise_exception(error_message, HTMLDownloaderError)
+        self._log_and_raise_exception(error_message, GoodreadsScraperError)
 
     def _save_html(self, output_path: Path, html: str) -> None:
         """Salve o conteúdo HTML no caminho especificado."""
@@ -97,7 +99,7 @@ class GoodreadsRepository(BaseClass):
             if not response.text or "Nenhum resultado encontrado" in response.text:
                 msg = "Nenhum resultado encontrado na pesquisa do Goodreads."
                 self.logger.warning(msg)
-                raise HTMLDownloaderError(msg)
+                raise GoodreadsScraperError(msg)
             return response
 
     def _download_search_results_html(self) -> Path:
@@ -106,7 +108,7 @@ class GoodreadsRepository(BaseClass):
             response = self._get_search_results_response()
             html = response.text
             self._save_html(self.search_results_html_path, html)
-        except HTMLDownloaderError:
+        except GoodreadsScraperError:
             self.logger.exception(super()._raise_error())
             raise
         else:
@@ -128,7 +130,7 @@ class GoodreadsRepository(BaseClass):
                 return None
 
             clean_link = self._clean_link(first_link)
-        except HTMLDownloaderError:
+        except GoodreadsScraperError:
             self.logger.exception(super()._raise_error())
             raise
         else:
@@ -211,7 +213,7 @@ class GoodreadsRepository(BaseClass):
             book_link = self._extract_first_book_link() or self.fallback_book_url
             html_path = self._download_or_use_cache(book_link)
             self.logger.info(f"HTML baixado com sucesso: '{html_path.name}'")
-        except HTMLDownloaderError:
+        except GoodreadsScraperError:
             self.logger.exception("Erro durante o download.")
             raise
         else:

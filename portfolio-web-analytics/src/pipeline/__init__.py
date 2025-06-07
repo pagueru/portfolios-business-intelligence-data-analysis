@@ -1,1 +1,1 @@
-"""Módulo principal do projeto de Web Analytics."""
+"""Módulo responsável pelo fluxo e processamento das etapas do pipeline de dados."""

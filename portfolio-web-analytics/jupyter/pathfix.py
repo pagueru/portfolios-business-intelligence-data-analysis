@@ -1,3 +1,5 @@
+"""Corrige o caminho do projeto ao executar exemplos, ajustando `sys.path` dinamicamente."""
+
 from pathlib import Path
 import sys
 
