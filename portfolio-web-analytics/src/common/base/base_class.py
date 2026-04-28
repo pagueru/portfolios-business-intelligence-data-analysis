@@ -35,9 +35,17 @@ class BaseClass:
         else:
             return f"{self.__class__.__name__}.<desconhecido>"
 
+    def _inicialize_class(self) -> str:
+        """Inicializa a classe base, garantindo que o nome da classe seja definido."""
+        return f"Inicializando a classe: '{self.__class__.__name__}'"
+
     def _raise_error(self) -> str:
         """Levanta um erro personalizado com o nome da classe e do método atual."""
         return f"Erro inesperado ao executar o método '{self._get_current_method_name()}'"
+
+    def _handle_value_error(self, message: str) -> None:
+        """Lança um ValueError com mensagem padronizada e registra o erro."""
+        raise ValueError(message)
 
     def _separator_line(self, char: str = "-", padding: int = 0) -> None:
         """Imprime uma linha ajustada ao tamanho do terminal ou ao valor fornecido pelo usuário."""
@@ -87,7 +95,3 @@ class BaseClass:
             raise
         else:
             return BeautifulSoup(file_path, "lxml")
-
-    def _inicialize_class(self) -> str:
-        """Inicializa a classe base, garantindo que o nome da classe seja definido."""
-        return f"Inicializando a classe: '{self.__class__.__name__}'"
