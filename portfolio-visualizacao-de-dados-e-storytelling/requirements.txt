@@ -1,0 +1,8 @@
+pandas
+matplotlib
+plotly
+python-docx
+requests
+kaleido
+scipy
+numpy
