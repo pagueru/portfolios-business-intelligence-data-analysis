@@ -1,7 +1,0 @@
-# Gerados pelo script: os dados vêm da URL pública em src/load_data.py
-data/
-outputs/*.html
-outputs/*.log
-__pycache__/
-*.pyc
-.venv/

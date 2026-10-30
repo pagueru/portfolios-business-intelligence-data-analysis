@@ -1,5 +1,0 @@
-{
-    "files.exclude": {
-        "**/*.egg-info": true,
-    }
-}
