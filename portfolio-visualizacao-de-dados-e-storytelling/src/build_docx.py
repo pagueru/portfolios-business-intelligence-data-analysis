@@ -1,14 +1,21 @@
 """Gera o .docx final da atividade textual."""
+
 from __future__ import annotations
 
-import os
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
+
+if TYPE_CHECKING:
+    import pandas as pd
+    from docx.document import Document as DocxDocument
+    from docx.text.paragraph import Paragraph
+    from docx.text.run import Run
 
 ROOT = Path(__file__).parent.parent
 OUTPUTS = ROOT / "outputs"
@@ -25,26 +32,47 @@ CIDADE_UF = "Presidente Prudente – São Paulo"
 ANO = "2026"
 DISCIPLINA = "Visualização de Dados e Storytelling"
 
+# Variação anual abaixo deste percentual entra na lista de quedas
+LIMIAR_QUEDA_PCT = -3
+# A partir deste r a correlação é descrita como forte
+LIMIAR_CORRELACAO_FORTE = 0.7
+
+MESES_PT = {
+    1: "janeiro",
+    2: "fevereiro",
+    3: "março",
+    4: "abril",
+    5: "maio",
+    6: "junho",
+    7: "julho",
+    8: "agosto",
+    9: "setembro",
+    10: "outubro",
+    11: "novembro",
+    12: "dezembro",
+}
+
 
 # ── Estilos base ──────────────────────────────────────────────────────────────
 
-def _configurar_estilos(doc):
+
+def _configurar_estilos(doc: DocxDocument) -> None:
     """Define Arial 12 como fonte padrão do documento."""
     estilo = doc.styles["Normal"]
     estilo.font.name = "Arial"
     estilo.font.size = Pt(12)
-    # herdar para todos os estilos de parágrafo
+    # herdar para todos os estilos de parágrafo; estilos de numeração não têm fonte
     for st in doc.styles:
-        try:
-            if st.font:
-                st.font.name = "Arial"
-        except Exception:
-            pass
+        fonte = getattr(st, "font", None)
+        if fonte:
+            fonte.name = "Arial"
 
 
 # ── Utilitários de parágrafo ──────────────────────────────────────────────────
 
-def _espaco(par, antes=0, depois=6, linha=18):
+
+def _espaco(par: Paragraph, antes: int = 0, depois: int = 6, linha: int = 18) -> None:
+    """Aplica o espaçamento antes, depois e entre linhas, em pontos."""
     pf = par.paragraph_format
     pf.space_before = Pt(antes)
     pf.space_after = Pt(depois)
@@ -52,7 +80,15 @@ def _espaco(par, antes=0, depois=6, linha=18):
         pf.line_spacing = Pt(linha)
 
 
-def _run(par, texto, negrito=False, tam=12, italico=False):
+def _run(
+    par: Paragraph,
+    texto: str,
+    *,
+    negrito: bool = False,
+    tam: int = 12,
+    italico: bool = False,
+) -> Run:
+    """Adiciona um trecho de texto em Arial preto ao parágrafo."""
     r = par.add_run(texto)
     r.bold = negrito
     r.italic = italico
@@ -62,7 +98,16 @@ def _run(par, texto, negrito=False, tam=12, italico=False):
     return r
 
 
-def _par_centralizado(doc, texto, negrito=False, tam=12, antes=0, depois=6):
+def _par_centralizado(  # noqa: PLR0913 - espaçamentos nomeados deixam a capa legível
+    doc: DocxDocument,
+    texto: str,
+    *,
+    negrito: bool = False,
+    tam: int = 12,
+    antes: int = 0,
+    depois: int = 6,
+) -> Paragraph:
+    """Adiciona um parágrafo centralizado, usado na capa."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
@@ -71,7 +116,7 @@ def _par_centralizado(doc, texto, negrito=False, tam=12, antes=0, depois=6):
     return p
 
 
-def _par_texto(doc, texto, antes=0, depois=6):
+def _par_texto(doc: DocxDocument, texto: str, antes: int = 0, depois: int = 6) -> Paragraph:
     """Parágrafo de texto corrido: Arial 12, 1,5, recuo de 1ª linha 1,25 cm."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -81,8 +126,8 @@ def _par_texto(doc, texto, antes=0, depois=6):
     return p
 
 
-def _titulo_secao(doc, texto, nivel=1):
-    """Título de seção: ABNT nível 1 = maiúsculas + negrito; nível 2 = negrito."""
+def _titulo_secao(doc: DocxDocument, texto: str) -> Paragraph:
+    """Título de seção em negrito; a caixa alta do nível 1 vem do próprio texto."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p.paragraph_format.first_line_indent = Cm(0)
@@ -91,16 +136,17 @@ def _titulo_secao(doc, texto, nivel=1):
     return p
 
 
-def _legenda_figura(doc, texto):
+def _legenda_figura(doc: DocxDocument, texto: str) -> Paragraph:
+    """Adiciona a legenda centralizada abaixo de uma figura."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
     _espaco(p, antes=2, depois=8, linha=14)
-    r = _run(p, texto, tam=10, italico=True)
+    _run(p, texto, tam=10, italico=True)
     return p
 
 
-def _par_ref(doc, texto):
+def _par_ref(doc: DocxDocument, texto: str) -> Paragraph:
     """Referência ABNT: sem recuo, espaçamento simples, 6 pt entre itens."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -111,16 +157,18 @@ def _par_ref(doc, texto):
     return p
 
 
-def _par_codigo(doc, codigo: str):
+def _par_codigo(doc: DocxDocument, codigo: str) -> None:
+    """Adiciona o código-fonte linha a linha em Consolas 8."""
     for linha in codigo.splitlines():
         p = doc.add_paragraph()
         _espaco(p, antes=0, depois=0, linha=10)
-        r = p.add_run(linha if linha else " ")
+        r = p.add_run(linha or " ")
         r.font.name = "Consolas"
         r.font.size = Pt(8)
 
 
-def _adicionar_imagem(doc, caminho: Path, largura_cm=15):
+def _adicionar_imagem(doc: DocxDocument, caminho: Path, largura_cm: float = 15) -> Paragraph:
+    """Adiciona uma imagem centralizada com a largura em centímetros."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
@@ -129,15 +177,15 @@ def _adicionar_imagem(doc, caminho: Path, largura_cm=15):
     return p
 
 
-def _quebra_pagina(doc):
+def _quebra_pagina(doc: DocxDocument) -> None:
+    """Adiciona uma quebra de página."""
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(0)
     p.paragraph_format.space_after = Pt(0)
-    import docx.enum.text as det
-    p.add_run().add_break(det.WD_BREAK.PAGE)
+    p.add_run().add_break(WD_BREAK.PAGE)
 
 
-def _adicionar_numeracao(doc):
+def _adicionar_numeracao(doc: DocxDocument) -> None:
     """Adiciona número de página no cabeçalho superior direito (ABNT)."""
     for section in doc.sections:
         section.different_first_page_header_footer = True  # capa sem número
@@ -154,20 +202,21 @@ def _adicionar_numeracao(doc):
         run = par.add_run()
         run.font.name = "Arial"
         run.font.size = Pt(10)
-        # campo PAGE
+        # campo PAGE: o python-docx não tem API pública para campos, daí o acesso a _r
         for tipo in ("begin", "end"):
-            fldChar = OxmlElement("w:fldChar")
-            fldChar.set(qn("w:fldCharType"), tipo)
+            fld_char = OxmlElement("w:fldChar")
+            fld_char.set(qn("w:fldCharType"), tipo)
             if tipo == "begin":
-                instrText = OxmlElement("w:instrText")
-                instrText.text = " PAGE "
-                run._r.append(fldChar)
-                run._r.append(instrText)
+                instr_text = OxmlElement("w:instrText")
+                instr_text.text = " PAGE "
+                run._r.append(fld_char)  # noqa: SLF001
+                run._r.append(instr_text)  # noqa: SLF001
             else:
-                run._r.append(fldChar)
+                run._r.append(fld_char)  # noqa: SLF001
 
 
 def _ler_codigo(nome: str) -> str:
+    """Lê um módulo de src/ para o apêndice."""
     return (ROOT / "src" / nome).read_text(encoding="utf-8")
 
 
@@ -265,21 +314,61 @@ CONCLUSAO_P3 = (
     "equipamentos de alta demanda."
 )
 
+SUMARIO = [
+    ("1", "INTRODUÇÃO", "3"),
+    ("2", "DESENVOLVIMENTO", "4"),
+    ("2.1", "Anos com Maiores Reduções no Consumo Energético", "4"),
+    ("2.2", "Padrão Sazonal no Consumo de Energia", "5"),
+    ("2.3", "Relação entre Consumo e Valor da Fatura", "6"),
+    ("2.4", "Como Elementos Interativos Contribuem para a Análise", "7"),
+    ("3", "CONCLUSÃO", "8"),
+    ("", "REFERÊNCIAS", "9"),
+    ("", "APÊNDICE A – CÓDIGO-FONTE", "10"),
+]
 
-# ── Geração do documento ──────────────────────────────────────────────────────
+REFERENCIAS = [
+    (
+        "COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR (CAPES). "
+        "Orientação Capes: Combate ao plágio. Brasília, 2011. Disponível em: "
+        "https://www.capes.gov.br/images/stories/download/diversos/"
+        "OrientacoesCapes_CombateAoPlagio.pdf. Acesso em: 23 maio 2026."
+    ),
+    (
+        "MATPLOTLIB DEVELOPMENT TEAM. Matplotlib: Visualization with Python. "
+        "[S.l.], 2024. Disponível em: https://matplotlib.org. "
+        "Acesso em: 23 maio 2026."
+    ),
+    (
+        "MCKINNEY, W. Python for Data Analysis: Data Wrangling with Pandas, "
+        "NumPy and IPython. 3. ed. Sebastopol: O'Reilly Media, 2022."
+    ),
+    (
+        "PLOTLY TECHNOLOGIES INC. Plotly Python Graphing Library. [S.l.], 2024. "
+        "Disponível em: https://plotly.com/python/. Acesso em: 23 maio 2026."
+    ),
+    (
+        "SALATA, A. Consumo de energia elétrica no Palácio do Jaburu 2017-2024. "
+        "[S.l.], 2024. Disponível em: "
+        "https://github.com/AndersonSalata/Materiais_Alunos_EAD. "
+        "Acesso em: 23 maio 2026."
+    ),
+]
 
-def gerar(df, pearson_r: float):
-    doc = Document()
-    _configurar_estilos(doc)
 
-    # margens ABNT: sup 3, inf 2, esq 3, dir 2
+# ── Seções do documento ───────────────────────────────────────────────────────
+
+
+def _definir_margens(doc: DocxDocument) -> None:
+    """Aplica as margens ABNT: sup 3, inf 2, esq 3, dir 2."""
     for section in doc.sections:
         section.top_margin = Cm(3)
         section.bottom_margin = Cm(2)
         section.left_margin = Cm(3)
         section.right_margin = Cm(2)
 
-    # ── CAPA ─────────────────────────────────────────────────────────────────
+
+def _escrever_capa(doc: DocxDocument) -> None:
+    """Escreve a capa."""
     _par_centralizado(doc, INSTITUICAO, negrito=True, tam=14, antes=72, depois=8)
     _par_centralizado(doc, CURSO, depois=8)
     _par_centralizado(doc, ALUNO, depois=60)
@@ -289,20 +378,11 @@ def gerar(df, pearson_r: float):
     _par_centralizado(doc, ANO, depois=0)
     _quebra_pagina(doc)
 
-    # ── SUMÁRIO ───────────────────────────────────────────────────────────────
+
+def _escrever_sumario(doc: DocxDocument) -> None:
+    """Escreve o sumário, sem os números de página."""
     _titulo_secao(doc, "SUMÁRIO")
-    sumario = [
-        ("1",   "INTRODUÇÃO", "3"),
-        ("2",   "DESENVOLVIMENTO", "4"),
-        ("2.1", "Anos com Maiores Reduções no Consumo Energético", "4"),
-        ("2.2", "Padrão Sazonal no Consumo de Energia", "5"),
-        ("2.3", "Relação entre Consumo e Valor da Fatura", "6"),
-        ("2.4", "Como Elementos Interativos Contribuem para a Análise", "7"),
-        ("3",   "CONCLUSÃO", "8"),
-        ("",    "REFERÊNCIAS", "9"),
-        ("",    "APÊNDICE A – CÓDIGO-FONTE", "10"),
-    ]
-    for num, titulo, pg in sumario:
+    for num, titulo, _pagina in SUMARIO:
         p = doc.add_paragraph()
         p.paragraph_format.first_line_indent = Cm(0)
         _espaco(p, antes=0, depois=4, linha=18)
@@ -310,149 +390,167 @@ def gerar(df, pearson_r: float):
         _run(p, f"{prefixo}{titulo}")
     _quebra_pagina(doc)
 
-    # ── 1 INTRODUÇÃO ──────────────────────────────────────────────────────────
+
+def _escrever_introducao(doc: DocxDocument) -> None:
+    """Escreve a seção 1."""
     _titulo_secao(doc, "1 INTRODUÇÃO")
     _par_texto(doc, INTRO_P1)
     _par_texto(doc, INTRO_P2)
     _par_texto(doc, INTRO_P3)
     _quebra_pagina(doc)
 
-    # ── 2 DESENVOLVIMENTO ────────────────────────────────────────────────────
-    _titulo_secao(doc, "2 DESENVOLVIMENTO")
 
-    # 2.1
-    _titulo_secao(doc, "2.1 Anos com Maiores Reduções no Consumo Energético", nivel=2)
+def _secao_reducoes(doc: DocxDocument, df: pd.DataFrame) -> None:
+    """Escreve a seção 2.1, com os anos de maior queda no consumo."""
+    _titulo_secao(doc, "2.1 Anos com Maiores Reduções no Consumo Energético")
     _par_texto(doc, DESC_FIG1)
     _adicionar_imagem(doc, OUTPUTS / "fig_linha_anual.png")
-    _legenda_figura(doc, "Figura 1 – Consumo total anual e valor médio da fatura por ano (2017–2024)")
+    _legenda_figura(
+        doc, "Figura 1 – Consumo total anual e valor médio da fatura por ano (2017–2024)"
+    )
 
     anual = df.groupby("ano")["consumo_kwh"].sum()
     anos_queda = []
     for i in range(1, len(anual)):
         a_ant, a_at = anual.index[i - 1], anual.index[i]
         var = (anual[a_at] - anual[a_ant]) / anual[a_ant] * 100
-        if var < -3:
+        if var < LIMIAR_QUEDA_PCT:
             anos_queda.append((a_at, var))
-    queda_str = "; ".join(
-        f"{a} ({_dec_br(v, 1)}%)" for a, v in sorted(anos_queda, key=lambda x: x[1])
-    ) or "nenhum ano apresentou queda acima de 3%"
+    queda_str = (
+        "; ".join(f"{a} ({_dec_br(v, 1)}%)" for a, v in sorted(anos_queda, key=lambda x: x[1]))
+        or "nenhum ano apresentou queda acima de 3%"
+    )
 
-    _par_texto(doc, (
-        f"Os anos com quedas mais expressivas foram: {queda_str}. "
-        f"Parte dessa redução coincide com o período de pandemia de COVID-19 "
-        f"(2020–2021), quando a movimentação na residência diminuiu. "
-        f"Mudanças na ocupação do imóvel entre governos diferentes também influenciam "
-        f"o perfil de consumo. Em contrapartida, o valor médio da fatura cresceu mesmo "
-        f"nos anos em que o consumo caiu, o que indica que os reajustes tarifários "
-        f"têm peso independente do volume consumido."
-    ))
+    _par_texto(
+        doc,
+        (
+            f"Os anos com quedas mais expressivas foram: {queda_str}. "
+            f"Parte dessa redução coincide com o período de pandemia de COVID-19 "
+            f"(2020–2021), quando a movimentação na residência diminuiu. "
+            f"Mudanças na ocupação do imóvel entre governos diferentes também influenciam "
+            f"o perfil de consumo. Em contrapartida, o valor médio da fatura cresceu mesmo "
+            f"nos anos em que o consumo caiu, o que indica que os reajustes tarifários "
+            f"têm peso independente do volume consumido."
+        ),
+    )
 
-    # 2.2
-    _titulo_secao(doc, "2.2 Padrão Sazonal no Consumo de Energia", nivel=2)
+
+def _secao_sazonalidade(doc: DocxDocument, df: pd.DataFrame) -> None:
+    """Escreve a seção 2.2, com o pico sazonal de consumo."""
+    _titulo_secao(doc, "2.2 Padrão Sazonal no Consumo de Energia")
     _par_texto(doc, DESC_FIG2)
     _adicionar_imagem(doc, OUTPUTS / "fig_barras_mensal.png")
-    _legenda_figura(doc, "Figura 2 – Consumo médio mensal (2017–2024); barras em vermelho indicam pico sazonal")
+    _legenda_figura(
+        doc,
+        "Figura 2 – Consumo médio mensal (2017–2024); barras em vermelho indicam pico sazonal",
+    )
 
     mensal = df.groupby("mes_num")["consumo_kwh"].mean()
     mes_pico = mensal.idxmax()
-    MESES_PT = {
-        1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
-        5: "maio", 6: "junho", 7: "julho", 8: "agosto",
-        9: "setembro", 10: "outubro", 11: "novembro", 12: "dezembro",
-    }
-    _par_texto(doc, (
-        f"Setembro, outubro e novembro concentram os maiores consumos médios do "
-        f"período, com pico em {MESES_PT[mes_pico]} "
-        f"({_dec_br(mensal[mes_pico] / 1000, 1)} MWh em média). "
-        f"Na região de Brasília, a primavera coincide com o início das altas "
-        f"temperaturas, quando o uso de ar-condicionado e climatização aumenta. "
-        f"O padrão se repete com regularidade suficiente para justificar "
-        f"intervenções de eficiência antes do período de pico no segundo semestre."
-    ))
+    _par_texto(
+        doc,
+        (
+            f"Setembro, outubro e novembro concentram os maiores consumos médios do "
+            f"período, com pico em {MESES_PT[mes_pico]} "
+            f"({_dec_br(mensal[mes_pico] / 1000, 1)} MWh em média). "
+            f"Na região de Brasília, a primavera coincide com o início das altas "
+            f"temperaturas, quando o uso de ar-condicionado e climatização aumenta. "
+            f"O padrão se repete com regularidade suficiente para justificar "
+            f"intervenções de eficiência antes do período de pico no segundo semestre."
+        ),
+    )
 
-    # 2.3
-    _titulo_secao(doc, "2.3 Relação entre Consumo e Valor da Fatura", nivel=2)
+
+def _secao_correlacao(doc: DocxDocument, pearson_r: float) -> None:
+    """Escreve a seção 2.3, com a correlação entre consumo e fatura."""
+    _titulo_secao(doc, "2.3 Relação entre Consumo e Valor da Fatura")
     _par_texto(doc, DESC_FIG3)
     _adicionar_imagem(doc, OUTPUTS / "fig_correlacao.png")
-    _legenda_figura(doc, (
-        f"Figura 3 – Correlação entre consumo (MWh) e valor da fatura (R$) | "
-        f"r de Pearson = {_dec_br(pearson_r, 3)}"
-    ))
-    _par_texto(doc, (
-        f"O coeficiente de Pearson obtido foi r = {_dec_br(pearson_r, 3)}, o que indica "
-        f"{'correlação positiva forte' if pearson_r >= 0.7 else 'correlação positiva moderada'} "
-        f"entre consumo e valor da fatura. Meses de maior consumo tendem, em geral, "
-        f"a gerar faturas mais altas. Contudo, a dispersão crescente ao longo dos "
-        f"anos mostra que o valor da fatura aumenta em ritmo maior do que o consumo. "
-        f"Os reajustes tarifários no período explicam essa diferença: o custo do kWh "
-        f"subiu de 2017 a 2024, portanto dois meses com o mesmo consumo podem gerar "
-        f"faturas bastante diferentes dependendo do ano. Isso também explica por que "
-        f"r é significativo, mas não se aproxima de 1,0."
-    ))
+    _legenda_figura(
+        doc,
+        (
+            f"Figura 3 – Correlação entre consumo (MWh) e valor da fatura (R$) | "
+            f"r de Pearson = {_dec_br(pearson_r, 3)}"
+        ),
+    )
+    intensidade = (
+        "correlação positiva forte"
+        if pearson_r >= LIMIAR_CORRELACAO_FORTE
+        else "correlação positiva moderada"
+    )
+    _par_texto(
+        doc,
+        (
+            f"O coeficiente de Pearson obtido foi r = {_dec_br(pearson_r, 3)}, o que indica "
+            f"{intensidade} "
+            f"entre consumo e valor da fatura. Meses de maior consumo tendem, em geral, "
+            f"a gerar faturas mais altas. Contudo, a dispersão crescente ao longo dos "
+            f"anos mostra que o valor da fatura aumenta em ritmo maior do que o consumo. "
+            f"Os reajustes tarifários no período explicam essa diferença: o custo do kWh "
+            f"subiu de 2017 a 2024, portanto dois meses com o mesmo consumo podem gerar "
+            f"faturas bastante diferentes dependendo do ano. Isso também explica por que "
+            f"r é significativo, mas não se aproxima de 1,0."
+        ),
+    )
 
-    # 2.4
-    _titulo_secao(doc, "2.4 Como Elementos Interativos Contribuem para a Análise", nivel=2)
+
+def _secao_interativo(doc: DocxDocument) -> None:
+    """Escreve a seção 2.4, sobre o gráfico interativo."""
+    _titulo_secao(doc, "2.4 Como Elementos Interativos Contribuem para a Análise")
     _par_texto(doc, DESC_FIG4)
     _adicionar_imagem(doc, OUTPUTS / "fig_interativo_preview.png")
-    _legenda_figura(doc, (
-        "Figura 4 – Captura do gráfico interativo (Plotly): consumo mensal por ano, "
-        "com hover, zoom e controle de séries pela legenda"
-    ))
+    _legenda_figura(
+        doc,
+        (
+            "Figura 4 – Captura do gráfico interativo (Plotly): consumo mensal por ano, "
+            "com hover, zoom e controle de séries pela legenda"
+        ),
+    )
     _par_texto(doc, TEXTO_INTERATIVO)
     _quebra_pagina(doc)
 
-    # ── 3 CONCLUSÃO ──────────────────────────────────────────────────────────
+
+def _escrever_desenvolvimento(doc: DocxDocument, df: pd.DataFrame, pearson_r: float) -> None:
+    """Escreve a seção 2, com as quatro questões do roteiro."""
+    _titulo_secao(doc, "2 DESENVOLVIMENTO")
+    _secao_reducoes(doc, df)
+    _secao_sazonalidade(doc, df)
+    _secao_correlacao(doc, pearson_r)
+    _secao_interativo(doc)
+
+
+def _escrever_conclusao(doc: DocxDocument, pearson_r: float) -> None:
+    """Escreve a seção 3."""
     _titulo_secao(doc, "3 CONCLUSÃO")
     _par_texto(doc, CONCLUSAO_P1)
     _par_texto(doc, CONCLUSAO_P2.replace("r = 0,624", f"r = {_dec_br(pearson_r, 3)}"))
     _par_texto(doc, CONCLUSAO_P3)
     _quebra_pagina(doc)
 
-    # ── REFERÊNCIAS ──────────────────────────────────────────────────────────
+
+def _escrever_referencias(doc: DocxDocument) -> None:
+    """Escreve as referências."""
     # título ABNT: maiúsculas, negrito, centralizado (NBR 14724)
     p_ref_titulo = doc.add_paragraph()
     p_ref_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_ref_titulo.paragraph_format.first_line_indent = Cm(0)
     _espaco(p_ref_titulo, antes=0, depois=12, linha=18)
     _run(p_ref_titulo, "REFERÊNCIAS", negrito=True)
-
-    refs = [
-        (
-            "COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR (CAPES). "
-            "Orientação Capes: Combate ao plágio. Brasília, 2011. Disponível em: "
-            "https://www.capes.gov.br/images/stories/download/diversos/"
-            "OrientacoesCapes_CombateAoPlagio.pdf. Acesso em: 23 maio 2026."
-        ),
-        (
-            "MATPLOTLIB DEVELOPMENT TEAM. Matplotlib: Visualization with Python. "
-            "[S.l.], 2024. Disponível em: https://matplotlib.org. "
-            "Acesso em: 23 maio 2026."
-        ),
-        (
-            "MCKINNEY, W. Python for Data Analysis: Data Wrangling with Pandas, "
-            "NumPy and IPython. 3. ed. Sebastopol: O'Reilly Media, 2022."
-        ),
-        (
-            "PLOTLY TECHNOLOGIES INC. Plotly Python Graphing Library. [S.l.], 2024. "
-            "Disponível em: https://plotly.com/python/. Acesso em: 23 maio 2026."
-        ),
-        (
-            "SALATA, A. Consumo de energia elétrica no Palácio do Jaburu 2017-2024. "
-            "[S.l.], 2024. Disponível em: "
-            "https://github.com/AndersonSalata/Materiais_Alunos_EAD. "
-            "Acesso em: 23 maio 2026."
-        ),
-    ]
-    for ref in refs:
+    for ref in REFERENCIAS:
         _par_ref(doc, ref)
     _quebra_pagina(doc)
 
-    # ── APÊNDICE A ───────────────────────────────────────────────────────────
+
+def _escrever_apendice(doc: DocxDocument) -> None:
+    """Escreve o apêndice com o código-fonte de load_data.py e plots.py."""
     _titulo_secao(doc, "APÊNDICE A – CÓDIGO-FONTE")
-    _par_texto(doc, (
-        "Módulos Python utilizados para ingestão dos dados, limpeza e geração "
-        "das visualizações desta atividade."
-    ))
+    _par_texto(
+        doc,
+        (
+            "Módulos Python utilizados para ingestão dos dados, limpeza e geração "
+            "das visualizações desta atividade."
+        ),
+    )
 
     p_tl = doc.add_paragraph()
     p_tl.paragraph_format.first_line_indent = Cm(0)
@@ -466,11 +564,11 @@ def gerar(df, pearson_r: float):
     _run(p_tp, "src/plots.py", negrito=True, tam=10)
     _par_codigo(doc, _ler_codigo("plots.py"))
 
-    # numeração de páginas (ABNT: superior direito)
-    _adicionar_numeracao(doc)
 
+def _salvar(doc: DocxDocument) -> Path:
+    """Grava o .docx e avisa se passar do limite de 2 MB."""
     doc.save(str(DOCX_OUT))
-    tamanho = os.path.getsize(DOCX_OUT)
+    tamanho = DOCX_OUT.stat().st_size
     print(f"Documento salvo: {DOCX_OUT}")
     print(f"Tamanho: {tamanho / 1024:.1f} KB / {tamanho / 1024**2:.2f} MB")
     if tamanho > LIMITE_BYTES:
@@ -480,8 +578,29 @@ def gerar(df, pearson_r: float):
     return DOCX_OUT
 
 
+# ── Geração do documento ──────────────────────────────────────────────────────
+
+
+def gerar(df: pd.DataFrame, pearson_r: float) -> Path:
+    """Monta o relatório completo e devolve o caminho do .docx."""
+    doc = Document()
+    _configurar_estilos(doc)
+    _definir_margens(doc)
+    _escrever_capa(doc)
+    _escrever_sumario(doc)
+    _escrever_introducao(doc)
+    _escrever_desenvolvimento(doc, df, pearson_r)
+    _escrever_conclusao(doc, pearson_r)
+    _escrever_referencias(doc)
+    _escrever_apendice(doc)
+    # numeração de páginas (ABNT: superior direito)
+    _adicionar_numeracao(doc)
+    return _salvar(doc)
+
+
 if __name__ == "__main__":
     import sys
+
     sys.path.insert(0, str(Path(__file__).parent))
     from load_data import carregar
     from plots import barras_mensal, correlacao, interativo_plotly, linha_anual
