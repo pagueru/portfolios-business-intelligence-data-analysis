@@ -34,6 +34,8 @@ notes.md
 
 # Dados gerados em execução
 **/mongo-data/*
+portfolio-nosql-database/docs/relatorio.html
+portfolio-web-analytics/data/*/*
 portfolio-visualizacao-de-dados-e-storytelling/data/
 portfolio-visualizacao-de-dados-e-storytelling/outputs/*.html
 

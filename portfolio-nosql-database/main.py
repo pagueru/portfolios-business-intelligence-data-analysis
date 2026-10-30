@@ -13,12 +13,12 @@ MENU_OPTIONS = {
 }
 
 # Constantes de configuração de caminhos e parâmetros
-MD_PATH = "./README.md"
-OUTPUT_DIR = "./querys"
+MD_PATH = "./RELATORIO.md"
+OUTPUT_DIR = "./queries"
 CODEBLOCK_LANG = "javascript"
 CSS_FILES = ["./css/custom-github-markdown-light.css"]
-HTML_OUTPUT_PATH = "./docs/README.html"
-OUTPUT_PDF = "./docs/relatorio-aula-pratica-3481350205.pdf"
+HTML_OUTPUT_PATH = "./docs/relatorio.html"
+OUTPUT_PDF = "./docs/relatorio-aula-pratica.pdf"
 
 
 class ProcessRunner:
@@ -66,7 +66,7 @@ class ProcessRunner:
                     )
                     self.print_terminal_line()
                     extractor.extract()
-                if option == "2":
+                elif option == "2":
                     converter = MarkdownToPdfConverter(
                         input_md=MD_PATH,
                         css_files=CSS_FILES,
@@ -75,7 +75,7 @@ class ProcessRunner:
                     )
                     self.print_terminal_line()
                     converter.run()
-                if option == "0":
+                elif option == "0":
                     self.print_terminal_line()
                     logger.info("Execução interrompida pelo usuário.")
                     sys.exit()

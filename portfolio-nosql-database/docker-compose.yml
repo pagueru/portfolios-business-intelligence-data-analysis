@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./portfolio-nosql-database/mongo-data:/data/db
+      - ./mongo-data:/data/db
     networks:
       - mongo_network
 

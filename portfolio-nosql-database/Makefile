@@ -1,4 +1,4 @@
-.PHONY: install install-dev
+.PHONY: help show.status.icons install clean.venv start start.docker remove.docker open.mongo-express lint
 include config.mk
 
 help: ## Mostra esta ajuda.
@@ -40,70 +40,22 @@ clean.venv: ## Remove o ambiente virtual do projeto
 		echo -e "$(WARN) .venv já removido"; \
 	fi
 
-start: ## Inicializa a aplicação em produção
+start: ## Abre o menu que extrai as consultas e gera o PDF do relatório
 	@echo -e "$(INFO) Iniciando aplicação..."
-	@if [ ! -d ".venv" ]; then echo -e "$(WARN) Ambiente virtual não encontrado! Criando..."; poetry install; fi
-	@poetry run python src/main.py
+	@uv run python main.py
 
-start.docker: ## Inicializa o docker-compose em segundo plano
-	@echo -e "$(INFO) Inicializando docker-compose em segundo plano..."
-	@docker-compose up -d
+start.docker: ## Sobe o MongoDB e o mongo-express em segundo plano
+	@echo -e "$(INFO) Inicializando docker compose em segundo plano..."
+	@docker compose up -d
 
-remove.docker: ## Remove o docker-compose e os containers
-	@echo -e "$(INFO) Removendo docker-compose e containers..."
-	@docker-compose down -v
+remove.docker: ## Remove os containers e os volumes
+	@echo -e "$(INFO) Removendo containers..."
+	@docker compose down -v
 
-open.dbeaver: ## Abre o host do DBeaver no navegador
-	@echo -e "$(INFO) Abrindo o host do DBeaver no navegador..."
-	@start http://localhost:8978/#/ || open http://localhost:8978/#/
+open.mongo-express: ## Abre o mongo-express no navegador
+	@echo -e "$(INFO) Abrindo o mongo-express no navegador..."
+	@start http://localhost:8081 || open http://localhost:8081
 
-test.all: ## Executa todos os testes com pytest
-	@echo -e "$(INFO) Executando testes..."
-	@if [ -d "tests" ]; then \
-		poetry run pytest; \
-	else \
-		echo -e "$(WARN) Diretório de testes não encontrado"; \
-	fi
-
-test.debug: ## Executa os testes e imprime os logs
-	@echo -e "$(INFO) Executando testes com logs..."
-	@if [ -d "tests" ]; then \
-		poetry run pytest -s; \
-	else \
-		echo -e "$(WARN) Diretório de testes não encontrado"; \
-	fi
-
-test.cobertura: ## Executa análise de cobertura do projeto
-	@echo -e "$(INFO) Executando análise de cobertura..."
-	@if [ -d "tests" ]; then \
-		poetry run pytest tests --cov=src; \
-	else \
-		echo -e "$(WARN) Diretório de testes não encontrado"; \
-	fi
-
-test.cobertura.html: ## Executa análise de cobertura e gera relatório em HTML.
-	@echo -e "$(INFO) Gerando relatório de cobertura em HTML..."
-	@if [ -d "tests" ]; then \
-		poetry run pytest tests --cov=src --cov-report=html; \
-	else \
-		echo -e "$(WARN) Diretório de testes não encontrado"; \
-	fi
-
-test.ruff: ## Verifica a formatação do código
-	@echo -e "$(INFO) Verificando formatação do código..."
-	@if [ -d "src" ]; then \
-		poetry run ruff check . --fix; \
-	else \
-		echo -e "$(WARN) Diretório de código-fonte não encontrado"; \
-	fi
-
-test.pre-commit: ## Executa o pre-commit para verificar o código
-	@echo -e "$(INFO) Executando pre-commit..."
-	@if [ -d ".git" ]; then \
-		pre-commit run --all-files; \
-	else \
-		echo -e "$(WARN) Diretório .git não encontrado"; \
-	fi
-
-corrigir.docs: ## Corrige a formatação do código
-	ruff --select D205 --fix .
+lint: ## Corrige o lint e formata o código com o ruff
+	@echo -e "$(INFO) Corrigindo lint e formatação..."
+	@uv run ruff check .; uv run ruff format . && uv run ruff check .

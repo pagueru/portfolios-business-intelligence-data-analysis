@@ -18,7 +18,6 @@ ERROR   = $(BOLD)$(RED)✖$(RESET)
 INFO    = $(BOLD)$(BLUE)i$(RESET)
 WARN    = $(BOLD)$(YELLOW)!$(RESET)
 WAIT    = $(BOLD)$(CYAN)...$(RESET)
-TITLE   = $(BOLD)$(BOLD)$(RESET)
 LINE    = ..................................................
 TAB     = "  "
 TITLE   = $(BOLD)

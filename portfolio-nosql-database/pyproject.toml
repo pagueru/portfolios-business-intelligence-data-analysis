@@ -1,7 +1,7 @@
 [project]
 name = "portfolio-nosql-database"
 version = "0.1.0"
-description = ""
+description = "Aula prática de bancos de dados não relacionais com MongoDB"
 authors = [
     { name = "Raphael Coelho", email = "raphael.phael@gmail.com" }
 ]
@@ -9,47 +9,22 @@ readme = "README.md"
 requires-python = ">=3.13"
 
 dependencies = [
-    "PyYaml==6.0.1",
-    "pandas (>=2.2.3,<3.0.0)",
-    "faker (>=37.0.2,<38.0.0)",
     "weasyprint (>=65.1,<66.0)",
-    "pdfkit (>=1.0.0,<2.0.0)",
-    "pyppeteer (>=2.0.0,<3.0.0)",
-    "markdown (>=3.8,<4.0)",
-    "pandocfilters (>=1.5.1,<2.0.0)",
-    "grip (>=4.6.2,<5.0.0)",
 ]
 
 [project.optional-dependencies]
 dev = [
     "ruff>=0.11.0",
-    "pytest>=8.3.4",
-    "pre-commit>=4.0.1",
-    "pytest-cov>=6.0.0",
-    "mypy>=1.15.0",
 ]
 
-[tool.pylint]
-extension-pkg-allow-list = ["pyodbc", "numpy", "pandas"]
-ignore-patterns = [".venv", ".pyenv"]	
-disable = [
-    "R1720", # R1720:no-else-raise
-    "W1201", # W1201:logging-not-lazy
-    "R1710", # R1710:inconsistent-return-statements
-    "R1705", # R1705:no-else-return
-    "W0611", # W0611:unused-imported
-    "R0902", # R0902:too-many-instance-attributes
-    "W0511", # FIX ME:fixme
-    "fixme", # FIX ME:fixme
-]
-
+[project.urls]
+repository = "https://github.com/pagueru/portfolios-business-intelligence-data-analysis"
 
 [tool.ruff]
 lint.select = ["ALL"]    # Ativar todas as regras de linting, análise e estilo
 fix = true               # Ativar correções automáticas
 lint.unfixable = []      # Permitir todas as correções
 line-length = 100        # Definir o comprimento da linha para 100 caracteres
-target-version = "py313" # Compatível com Python 3.13
 lint.ignore = [
     "D203",              # Conflito com D211 (linha em branco antes da classe)
     "D212",              # Conflito com D213 (resumo na primeira linha)
@@ -103,18 +78,3 @@ mypy-init-return = true           # Exigir anotações de tipo em __init__ e __n
 suppress-none-returning = false   # Não suprimir erros de retorno None
 allow-star-arg-any = false        # Não permitir *args e **kwargs sem anotações de tipo
 
-[tool.mypy]
-strict = true                     # Ativa as verificações estritas
-ignore_missing_imports = true     # Ignora erros de importação ausente
-disable_error_code = ["import-untyped"]
-exclude = ".venv"
-
-[tool.pytest.ini_options]
-pythonpath = [".","src"]         # Adiciona o diretório atual ao PYTHONPATH
-
-[project.urls]
-repository = "https://github.com/pagueru/portfolios-business-intelligence-data-analysis"
-
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"

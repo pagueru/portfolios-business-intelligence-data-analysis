@@ -5,11 +5,9 @@ Este relatório tem como objetivo apresentar as atividades realizadas como parte
 ## Informações Adicionais
 
 > **Nome:** Raphael Henrique Vieira Coelho  
-> **Matrícula:** 3481350205  
 > **Curso:** Inteligência de Mercado e Análise de Dados  
 > **Instituição:** Faculdade Anhanguera  
-> **Período:** 5º Semestre / 2025  
-> **E-mail:** <raphael.phael@gmail.com>
+> **Período:** 5º Semestre / 2025
 
 ## Atividades Propostas
 
@@ -144,6 +142,8 @@ A atividade consistiu em criar um banco de dados `lojadb` para simular o context
       )
       ```
 
+    <img src="./images/3-apos-update-endereco.png" width="900" alt="3-apos-update-endereco" />
+
 2. Atualização com o campo `compras` (array de objetos: `nome_produto`, `preco`, `quantidade`).
 
     a. Atualização das compras de João.
@@ -196,6 +196,8 @@ A atividade consistiu em criar um banco de dados `lojadb` para simular o context
         }
       )
       ```
+
+    <img src="./images/4-apos-update-compras.png" width="900" alt="4-apos-update-compras" />
 
 ### 2.3 Processamento de Dados (Procedimento/Atividade № 2)
 
