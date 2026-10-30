@@ -46,4 +46,4 @@ run: ## Inicializa a aplicação em produção
 
 requirements: 
 	@echo -e "$(INFO) Gerando requirements.txt..."
-	@uv export --no-hashes --no-header --format requirements-txt > requirements.txt
+	@uv export --no-hashes --no-header --no-annotate --format requirements-txt > requirements.txt
