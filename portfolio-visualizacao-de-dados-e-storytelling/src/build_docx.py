@@ -14,7 +14,7 @@ ROOT = Path(__file__).parent.parent
 OUTPUTS = ROOT / "outputs"
 OUTPUTS.mkdir(exist_ok=True)
 
-DOCX_OUT = OUTPUTS / "Atividade_Textual_Raphael_Coelho.docx"
+DOCX_OUT = OUTPUTS / "Visualizacao_de_Dados_e_storytelling_Raphael_Henrique_Vieira_Coelho.docx"
 LIMITE_BYTES = 2 * 1024 * 1024
 
 TITULO = "Visualização de Tendências de Consumo Energético no Palácio do Jaburu"
