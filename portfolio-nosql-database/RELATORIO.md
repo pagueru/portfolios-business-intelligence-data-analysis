@@ -274,7 +274,7 @@ Esses resultados mostram que o **MongoDB** pode ser útil em situações que exi
 
 A atividade prática permitiu conhecer, de forma simples, o funcionamento do **MongoDB** para criar, atualizar e consultar dados em um banco não relacional. Foi possível perceber a flexibilidade do modelo de documentos e a facilidade para realizar consultas variadas. A experiência contribuiu para entender conceitos básicos de bancos de dados **NoSQL** e como aplicá-los em situações do dia a dia.
 
-Como complemento, os arquivos utilizados durante a atividade — incluindo scripts e consultas — estão disponíveis no repositório do projeto no [GitHub](https://github.com/pagueru/portfolios-business-intelligence-data-analysis/tree/master/portfolio-nosql-database).
+Como complemento, os arquivos utilizados durante a atividade — incluindo scripts e consultas — estão disponíveis no repositório do projeto no [GitHub](https://github.com/pagueru/portfolios-business-intelligence-data-analysis/tree/main/portfolio-nosql-database).
 
 ## 5. Referências Bibliográficas
 
